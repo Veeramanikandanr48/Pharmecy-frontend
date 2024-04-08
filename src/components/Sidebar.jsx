@@ -40,7 +40,7 @@ const Sidebar = () => {
         <img
           width="20"
           height="20"
-          src={`${showCategories ? 'https://img.icons8.com/plasticine/100/folder-invoices.png' : 'https://img.icons8.com/carbon-copy/100/folder-invoices.png'}`}
+          src={`${showCategories ? 'https://img.icons8.com/pulsar-gradient/48/add-folder.png':'https://img.icons8.com/pulsar-line/48/add-folder.png'}`}
           alt="folder-invoices"
         />
         <span>Categories</span>
@@ -53,7 +53,7 @@ const Sidebar = () => {
               <img
                 width="20"
                 height="20"
-                src={`${category === activeCategory ? 'https://img.icons8.com/plasticine/100/folder-invoices.png' : 'https://img.icons8.com/carbon-copy/100/folder-invoices.png'}`}
+                src={`${category === activeCategory ? 'https://img.icons8.com/pulsar-gradient/48/add-folder.png':'https://img.icons8.com/pulsar-line/48/add-folder.png'}`}
                 alt="folder-invoices"
               />
               <Link to={`/category/${category}`} className={category === activeCategory ? 'font-bold' : ''}>

@@ -52,7 +52,7 @@ const Navbar = () => {
           {/* Cart Icon for Mobile */}
           <div className="flex-shrink-0 lg:hidden text-right pr-3">
             <Link to="/cart" className="text-white hover:text-gray-300">
-              Cart
+            <img width="35" height="35" src="https://img.icons8.com/officel/80/add-shopping-cart.png" alt="add-shopping-cart"/>
             </Link>
           </div>
 

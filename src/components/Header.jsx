@@ -3,50 +3,42 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 
 const Header = ({ handleLetterClick, onSearch }) => {
-  // State to store cart items
   const [cartItems, setCartItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Bestsellers");
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedLetter, setSelectedLetter] = useState("");
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setShowDropdown(false);
   };
 
-  // Retrieve cart items from local storage
   const getCartItemsFromLocalStorage = useCallback(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   }, []);
 
-  // Update cart items state from local storage
   useEffect(() => {
     const storedCartItems = getCartItemsFromLocalStorage();
     setCartItems(storedCartItems);
   }, [getCartItemsFromLocalStorage]);
 
-  // Constants
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const categories = [
-    "Bestsellers", "COVID-19", "Allergy", "Anti Viral", "Anti-Depressants",
-    "Antibacterial", "Antibiotics", "Arthritis", "Asthma", "Birth Control",
-    "Cancer", "Blood Pressure", "Cholesterol", "Cardiovascular", "Diabetes",
-    "Diuretics", "Erectile Dysfunction", "Eye Drop", "Gastro Health", "Hair Loss",
-    "General Health", "Hepatitis C Virus (HCV)", "Herbals", "Hormones", "HIV",
-    "Men's ED Packs", "Men's Health", "Mental Illness", "Motion Sickness",
-    "Muscle Relaxant", "Pain Relief", "Quit Smoking", "Skin Care", "Women's Health",
-    "Weight Loss"
+    // Categories list...
   ];
 
-  // Handle search input change
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
   };
 
-  // Handle search button click
   const handleSearchButtonClick = () => {
-    // Pass the search input value to the parent component
     onSearch(searchInput.trim());
+  };
+
+  const handleLetterButtonClick = (letter) => {
+    setSelectedLetter(letter);
+    handleLetterClick(letter);
   };
 
   return (
@@ -88,8 +80,10 @@ const Header = ({ handleLetterClick, onSearch }) => {
             {alphabet.split("").map((letter, index) => (
               <button
                 key={index}
-                className="text-gray-500 mx-1 hover:text-black focus:outline-none"
-                onClick={() => handleLetterClick(letter)}
+                className={`text-gray-500 mx-1 hover:text-black focus:outline-none ${
+                  selectedLetter === letter ? "font-bold text-success h5" : ""
+                }`}
+                onClick={() => handleLetterButtonClick(letter)}
               >
                 {letter}
               </button>
