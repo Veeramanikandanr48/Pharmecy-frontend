@@ -35,7 +35,7 @@ const Home = ({ selectedLetter, searchValue }) => {
         <Carousel />
         <div className="relative flex-1">
           {loading && <LoadingSpinner />}
-          {!loading && !error && <ProductGrid products={selectedProducts} />}
+          {!loading && !error && <ProductGrid products={selectedProducts} selectedCategory={selectedCategory} />}
           {error && <ErrorMessage error={error} />}
         </div>
       </div>
@@ -55,13 +55,18 @@ const ErrorMessage = ({ error }) => (
   <div className="text-red-500">Error: {error}</div>
 );
 
-const ProductGrid = ({ products }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {products.map((product) => (
-      <ProductCard key={product._id} product={product} />
-    ))}
+const ProductGrid = ({ products, selectedCategory }) => (
+  <div>
+    <h1 className="h1 lg:hidden p-2">{selectedCategory}</h1>
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products.map((product) => (
+        <ProductCard key={product._id} product={product} />
+      ))}
+    </div>
   </div>
 );
+
+
 
 const ProductCard = ({ product }) => (
   <div className="product-card border rounded-lg overflow-hidden w-full">
