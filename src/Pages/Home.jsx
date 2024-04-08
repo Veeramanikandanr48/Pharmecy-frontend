@@ -35,7 +35,7 @@ const Home = ({ selectedLetter, searchValue }) => {
         <Carousel />
         <div className="relative flex-1">
           {loading && <LoadingSpinner />}
-          {!loading && !error && <ProductGrid products={selectedProducts} selectedCategory={selectedCategory} />}
+          {!loading && !error && <ProductGrid key={selectedCategory} products={selectedProducts} selectedCategory={selectedCategory} />}
           {error && <ErrorMessage error={error} />}
         </div>
       </div>
