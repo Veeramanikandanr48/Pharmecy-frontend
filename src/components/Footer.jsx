@@ -41,16 +41,18 @@ const Footer = () => {
             <p className="text-xs text-secondary mt-2">See links to the certificates at Secure Checkout Page</p>
           </div>
 
-          {/* Subscribe to the news and Mobile Version */}
-          <div className="mb-2">
-            <p className="font-bold text-xs text-secondary">Subscribe to the news</p>
-            <div className="flex">
-              <input type="email" placeholder="Enter email" className="border border-gray-300 px-2 py-1 text-xs w-28" />
-              <button type="button" className="btn border-dark text-xs ml-2">Submit</button>
-            </div>
-            <div className="flex justify-center mt-2">
-              <p className="font-bold text-xs text-secondary">Mobile Version</p>
-              <img src={Group_5} width={100} height={1} alt="group" className="ml-2" />
+          {/* Subscribe to the news and Mobile Version (Hidden in Mobile View) */}
+          <div className="hidden md:block">
+            <div className="mb-2">
+              <p className="font-bold text-xs text-secondary">Subscribe to the news</p>
+              <div className="flex">
+                <input type="email" placeholder="Enter email" className="border border-gray-300 px-2 py-1 text-xs w-28" />
+                <button type="button" className="btn border-dark text-xs ml-2">Submit</button>
+              </div>
+              <div className="flex justify-center mt-2">
+                <p className="font-bold text-xs text-secondary">Mobile Version</p>
+                <img src={Group_5} width={100} height={1} alt="group" className="ml-2" />
+              </div>
             </div>
           </div>
         </div>
