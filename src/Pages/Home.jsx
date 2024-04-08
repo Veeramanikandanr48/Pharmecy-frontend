@@ -31,7 +31,7 @@ const Home = ({ selectedLetter, searchValue }) => {
 
   return (
     <Layout>
-      <div className="w-full flex flex-col p-3">
+      <div className="w-full flex flex-col p-3 min-vh-50">
         <Carousel />
         <div className="relative">
           {loading && <LoadingSpinner />}
@@ -76,7 +76,7 @@ const ProductCard = ({ product }) => (
       <p className="text-xs text-blue-400 mb-2">{product.packaging}</p>
       <div className="flex justify-between items-center">
         <p className="text-sm font-semibold">{product["Discount price1"]}</p>
-        <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-blue-500 rounded-md">
+        <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-green-500 rounded-md">
           SELECT PACK
         </Link>
       </div>
