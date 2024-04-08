@@ -31,9 +31,9 @@ const Home = ({ selectedLetter, searchValue }) => {
 
   return (
     <Layout>
-      <div className="w-full lg:w-5/6 flex flex-col gap-5 p-3 min-h-screen items-center">
+      <div className="w-full flex flex-col p-3">
         <Carousel />
-        <div className="relative flex-1">
+        <div className="relative">
           {loading && <LoadingSpinner />}
           {!loading && !error && <ProductGrid key={selectedCategory} products={selectedProducts} selectedCategory={selectedCategory} />}
           {error && <ErrorMessage error={error} />}
@@ -44,7 +44,7 @@ const Home = ({ selectedLetter, searchValue }) => {
 };
 
 const LoadingSpinner = () => (
-  <div className="absolute inset-0 flex items-center justify-center">
+  <div className="absolute inset-0 flex justify-center items-center">
     <div className="spinner-border text-primary" role="status">
       <span className="sr-only">Loading...</span>
     </div>
@@ -66,8 +66,6 @@ const ProductGrid = ({ products, selectedCategory }) => (
   </div>
 );
 
-
-
 const ProductCard = ({ product }) => (
   <div className="product-card border rounded-lg overflow-hidden w-auto">
     <div className="p-3">
@@ -88,7 +86,5 @@ const ProductCard = ({ product }) => (
     </div>
   </div>
 );
-
-
 
 export default Home;

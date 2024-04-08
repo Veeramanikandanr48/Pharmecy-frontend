@@ -18,30 +18,51 @@ const Sidebar = () => {
 
   // State to keep track of active category
   const [activeCategory, setActiveCategory] = useState("Bestsellers");
+  // State to toggle visibility of category list
+  const [showCategories, setShowCategories] = useState(false);
 
   // Function to handle category click
   const handleCategoryClick = (category) => {
     setActiveCategory(category);
+    // Close the category list dropdown after selecting a category
+    setShowCategories(false);
+  };
+
+  // Function to toggle visibility of category list
+  const toggleCategoryList = () => {
+    setShowCategories(!showCategories);
   };
 
   return (
-    <div className="hidden lg:flex flex-col min-h-screen p-5 gap-3">
+    <div className="lg:flex flex-col min-h-screen p-5 gap-3 hidden lg:flex">
       <h1 className="border-b py-2">Categories List</h1>
-      <ul className="flex flex-col text-xs gap-2 text-gray-600">
-        {categories.map((category, index) => (
-          <li key={index} className="cursor-pointer flex items-center gap-1" onClick={() => handleCategoryClick(category)}>
-            <img
-              width="20"
-              height="20"
-              src={`${category === activeCategory ? 'https://img.icons8.com/plasticine/100/folder-invoices.png' : 'https://img.icons8.com/carbon-copy/100/folder-invoices.png'}`}
-              alt="folder-invoices"
-            />
-            <Link to={`/category/${category}`} className={category === activeCategory ? 'font-bold' : ''}>
-              {category}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <button onClick={toggleCategoryList} className="cursor-pointer flex items-center gap-1">
+        <img
+          width="20"
+          height="20"
+          src={`${showCategories ? 'https://img.icons8.com/plasticine/100/folder-invoices.png' : 'https://img.icons8.com/carbon-copy/100/folder-invoices.png'}`}
+          alt="folder-invoices"
+        />
+        <span>Categories</span>
+      </button>
+      {/* Render category list if showCategories is true */}
+      {showCategories && (
+        <ul className="flex flex-col text-xs gap-2 text-gray-600">
+          {categories.map((category, index) => (
+            <li key={index} className="cursor-pointer flex items-center gap-1" onClick={() => handleCategoryClick(category)}>
+              <img
+                width="20"
+                height="20"
+                src={`${category === activeCategory ? 'https://img.icons8.com/plasticine/100/folder-invoices.png' : 'https://img.icons8.com/carbon-copy/100/folder-invoices.png'}`}
+                alt="folder-invoices"
+              />
+              <Link to={`/category/${category}`} className={category === activeCategory ? 'font-bold' : ''}>
+                {category}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
       <h1 className="border-b py-2">Shipping option</h1>
       <img src={card_content} alt="card-c" className="mb-5"/>
     </div>
