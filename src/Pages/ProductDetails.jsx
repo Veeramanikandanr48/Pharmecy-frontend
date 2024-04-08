@@ -1,4 +1,3 @@
-// Import necessary libraries/components
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
@@ -13,23 +12,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Layout from "../Layout";
 
 const ProductDetails = () => {
-  // State variables
   const [showDescription, setShowDescription] = useState(false);
   const [product, setProduct] = useState(null);
   const { productName } = useParams();
   const navigate = useNavigate();
 
-  // Fetch product data
   const { loading, error, data } = useProductData(`products/${productName}`);
 
-  // Update product state when data is fetched
   useEffect(() => {
     if (!loading && !error && data) {
       setProduct(data);
     }
   }, [loading, error, data]);
 
-  // Function to handle row click
   const handleRowClick = (rowData) => {
     let existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     const updatedCart = [...existingCart, rowData];
@@ -37,7 +32,6 @@ const ProductDetails = () => {
     navigate("/cart");
   };
 
-  // Return loading spinner while data is being fetched
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
@@ -46,30 +40,26 @@ const ProductDetails = () => {
     );
   }
 
-  // Return error message if there's an error or product is not found
   if (error || !product) {
     return <div>Product not found</div>;
   }
 
-  // Render product details
   return (
     <Layout>
       <div className="container mt-5 px-5">
         <div className="row">
           <div className="col-lg-10 offset-lg-1 overflow-hidden">
-            {/* Product Info */}
             <div className="row mt-4">
-            <div className="col-lg-2 d-flex justify-content-center align-items-center">
-  <img
-    width="300"
-    height="300"
-    src={product.URL}
-    alt={product.Name}
-    title={product.Name}
-    className="img-fluid"
-  />
-</div>
-
+              <div className="col-lg-2 d-flex justify-content-center align-items-center">
+                <img
+                  width="300"
+                  height="300"
+                  src={product.URL}
+                  alt={product.Name}
+                  title={product.Name}
+                  className="img-fluid"
+                />
+              </div>
               <div className="col-lg-8">
                 <div className="pill-info">
                   <h2 className="title-pill h2 font-weight-bold text-primary">
@@ -82,8 +72,6 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* Select Doses */}
             <div className="row mt-1 mb-4">
               <div className="col-12">
                 <span className="title-doses">Select Doses:</span>
@@ -93,14 +81,12 @@ const ProductDetails = () => {
               </div>
             </div>
             <hr />
-
-            {/* Table of Prices */}
             <div className="row mt-2">
               <div className="col-12">
                 <div className="table-responsive">
                   <table className="table table-hover">
                     <thead>
-                      <tr>
+                      <tr className="text-xs">
                         <th scope="col">Packaging</th>
                         <th scope="col">No of Packs</th>
                         <th scope="col">Image</th>
@@ -175,7 +161,7 @@ const ProductDetails = () => {
                               </td>
                               <td>
                                 <a
-                                  className="btn btn-primary"
+                                  className="btn btn-primary text-xs"
                                   href={product.addToCartLink}
                                 >
                                   ADD TO CART
@@ -203,8 +189,6 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* Additional Information */}
             <div className="row mt-3">
               <div className="col-lg-12 text-center">
                 <img alt="parcel" src={parcel_en} width="85%" />
@@ -217,8 +201,6 @@ const ProductDetails = () => {
                 </p>
               </div>
             </div>
-
-            {/* Shipping Details */}
             <div className="row mt-3">
               <div className="col-lg-12 d-flex justify-content-center">
                 <div className="table-responsive">
@@ -257,10 +239,8 @@ const ProductDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* Other Information */}
             <div className="row m-3">
-              <table>
+              <table className="table">
                 <tbody>
                   <tr>
                     <td width="23">
@@ -295,12 +275,9 @@ const ProductDetails = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* Product Description and Testimonials */}
             <div className="row mt-3">
               <div className="col-lg-12">
                 <div className="product-descr">
-                  {/* Navigation Tabs */}
                   <ul className="nav nav-tabs flex-column flex-sm-row">
                     <li className="nav-item">
                       <button
@@ -323,17 +300,12 @@ const ProductDetails = () => {
                       </button>
                     </li>
                   </ul>
-
-                  {/* Content Blocks */}
                   <div className="tab-content mt-3">
-                    {/* Product description content */}
                     {showDescription && (
                       <div className="product-descr-block">
                         <p>{product['PRODUCT DESCRIPTION']}</p>
                       </div>
                     )}
-
-                    {/* Testimonials content */}
                     {!showDescription && (
                       <div id="c_p2" className="tab-pane fade show active">
                         <div className="review-block">

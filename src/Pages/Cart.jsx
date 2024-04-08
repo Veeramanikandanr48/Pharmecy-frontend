@@ -207,45 +207,25 @@ const Cart = () => {
           <hr />
         </div>
         <div className="grid grid-cols-2 gap-3 justify-center md:grid-cols-4">
-          {filteredProducts.map((product, index) => (
-            <div
-              key={product.URL}
-              className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md"
-            >
-              <h1 className="px-4 py-2 text-lg font-semibold text-left">
-                {product.Name}
-              </h1>
-              <div className="d-flex justify-center align-items-center">
-                <img
-                  width="150"
-                  height="150"
-                  src={product.URL}
-                  alt={product.name}
-                  title={product.name}
-                  className="img-fluid"
-                />
-              </div>
-              <div className="p-4">
-                <p className="text-xs text-blue-400">{product.packaging}</p>
-                <div className="flex justify-between items-center mt-2">
-                  <p className="text-lg font-semibold">
-                    {product["Discount price1"]}
-                  </p>
-                  <Link
-                    to={`/product/${product._id}`}
-                    className="px-3 py-1 text-xs text-black rounded border border-dark"
-                  >
-                    SELECT PACK
-                  </Link>
-                </div>
-                <p className="mt-2 text-xs text-red-600">
-                  Manufacturer's Suggested Retail Price{" "}
-                  {product["Original price1"]}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+  {filteredProducts.map((product, index) => (
+    <div key={product.URL} className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md">
+      <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
+      <div className="flex justify-center">
+        <img src={product.URL} alt={product.name} title={product.name} className="w-auto h-auto mb-2" />
+      </div>
+      <p className="text-xs text-blue-400 mb-2">{product.packaging}</p>
+      <div className="flex justify-between items-center">
+        <p className="text-sm font-semibold">{product["Discount price1"]}</p>
+        <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-green-500 rounded-md">
+          SELECT PACK
+        </Link>
+      </div>
+      <p className="mt-2 text-xs text-red-600">
+        Manufacturer's Suggested Retail Price {product["Original price1"]}
+      </p>
+    </div>
+  ))}
+</div>
       </div>
     </Layout>
   );
