@@ -31,7 +31,7 @@ const Home = ({ selectedLetter }) => {
 
   return (
     <Layout>
-      <div className="w-full lg:w-5/6 flex flex-col gap-5 p-5 items-center justify-center">
+      <div className="w-full lg:w-5/6 flex flex-col gap-5 p-3 items-center justify-center">
         <Carousel />
         {loading ? (
           <LoadingSpinner /> // Render loading spinner if loading is true
