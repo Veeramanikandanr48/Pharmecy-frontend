@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import useProductData from "../Data/useProductData";
+import Layout from "../Layout";
 
 const Home = ({ selectedLetter }) => {
   const { categoryName } = useParams();
@@ -29,16 +30,18 @@ const Home = ({ selectedLetter }) => {
   }, [data]);
 
   return (
-    <div className="w-full lg:w-5/6 h-fit flex flex-col gap-5 p-5 items-center justify-center">
-      <Carousel />
-      {loading ? (
-        <LoadingSpinner /> // Render loading spinner if loading is true
-      ) : error ? (
-        <ErrorMessage error={error} /> // Render error message if error occurred
-      ) : (
-        <ProductGrid products={selectedProducts} /> // Render product grid if data is loaded successfully
-      )}
-    </div>
+    <Layout>
+      <div className="w-full lg:w-5/6 flex flex-col gap-5 p-5 items-center justify-center">
+        <Carousel />
+        {loading ? (
+          <LoadingSpinner /> // Render loading spinner if loading is true
+        ) : error ? (
+          <ErrorMessage error={error} /> // Render error message if error occurred
+        ) : (
+          <ProductGrid products={selectedProducts} /> // Render product grid if data is loaded successfully
+        )}
+      </div>
+    </Layout>
   );
 };
 
@@ -56,38 +59,31 @@ const ErrorMessage = ({ error }) => (
 
 // Component to render product grid
 const ProductGrid = ({ products }) => (
-  <div className="grid grid-cols-3 gap-5">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
     {products.map((product) => (
       <ProductCard key={product._id} product={product} />
     ))}
   </div>
 );
 
+
 // Component to render individual product card
 const ProductCard = ({ product }) => (
-  <div className="product-card">
-    <h1 className="px-4 py-2 text-lg font-semibold text-left">
-      {product.Name}
-    </h1>
-    <div className="d-flex justify-content-center align-items-center">
+  <div className="product-card border rounded-lg overflow-hidden">
+    <div className="p-4">
+      <h1 className="text-lg font-semibold mb-2">{product.Name}</h1>
       <img
-        width="150"
-        height="150"
         src={product.URL}
         alt={product.name}
         title={product.name}
-        className="img-fluid"
+        className="w-full h-auto mb-2"
       />
-    </div>
-    <div className="p-4">
-      <p className="text-xs text-blue-400">{product.packaging}</p>
-      <div className="flex justify-between items-center mt-2">
-        <p className="text-lg font-semibold">
-          {product["Discount price1"]}
-        </p>
+      <p className="text-xs text-blue-400 mb-1">{product.packaging}</p>
+      <div className="flex justify-between items-center">
+        <p className="text-lg font-semibold">{product["Discount price1"]}</p>
         <Link
           to={`/product/${product._id}`}
-          className="px-3 py-1 text-xs text-black rounded border border-dark"
+          className="px-3 py-1 text-xs text-white bg-blue-500 rounded-md"
         >
           SELECT PACK
         </Link>

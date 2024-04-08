@@ -5,52 +5,58 @@ import Group_5 from '../media/Group 5.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-light text-dark text-center pt-1">
-      <div className="container footer-sec">
-        <div className="row d-flex justify-content-around align-items-center text-sm text-left m-3">
+    <footer className="bg-light text-dark text-center py-4">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5 text-sm text-left">
 
-          <div className="col-md-2 mb-3">
-            <ul className="list-unstyled">
+          {/* Home, Contact Us, About Us */}
+          <div className="mb-3 text-sm">
+            <ul className="list-none">
               <li>Home</li>
               <li>Contact Us</li>
               <li>About Us</li>
             </ul>
           </div>
 
-          <div className="col-md-2 mb-3">
-            <ul className="list-unstyled">
+          {/* Our Policy, Terms & Conditions, Sitemap */}
+          <div className="mb-3 text-sm">
+            <ul className="list-none">
               <li>Our Policy</li>
               <li>Terms & Conditions</li>
               <li>Sitemap</li>
             </ul>
           </div>
 
-          <div className="col-md-2 mb-3">
-            <p className="font-weight-bold">Payment Options</p>
-            <img src={payment} width={200} height={40} alt="payment" />
-            <p className='text-xs mt-2 text-secondary'>Products are not appeared on your credit card statement</p>
+          {/* Payment Options */}
+          <div className="mb-2 text-xs">
+            <p className="font-bold">Payment Options</p>
+            <img src={payment} width={200} height={40} alt="payment" className="mt-2 mx-auto" />
+            <p className="text-xs text-secondary mt-2">Products are not appeared on your credit card statement</p>
           </div>
 
-          <div className="col-md-2 mb-3">
-            <p className="font-weight-bold">Secure Payment Process</p>
-            <img src={securePay} width={200} height={40} alt="secure_payment" />
-            <p className='text-xs mt-2 text-secondary'>See links to the certificates at Secure Checkout Page</p>
+          {/* Secure Payment Process */}
+          <div className="mb-2 text-xs">
+            <p className="font-bold">Secure Payment Process</p>
+            <img src={securePay} width={200} height={40} alt="secure_payment" className="mt-2 mx-auto" />
+            <p className="text-xs text-secondary mt-2">See links to the certificates at Secure Checkout Page</p>
           </div>
 
-          <div className="col-md-2 mb-3">
-            <p className="font-weight-bold text-xs text-secondary pb-2">Subscribe to the news</p>
-            <div className='d-flex'>
-              <input type='email' placeholder='Enter email' />
-              <button type='button' className='btn border-dark text-xs'>Submit</button>
+          {/* Subscribe to the news and Mobile Version */}
+          <div className="mb-2">
+            <p className="font-bold text-xs text-secondary">Subscribe to the news</p>
+            <div className="flex">
+              <input type="email" placeholder="Enter email" className="border border-gray-300 px-2 py-1 text-xs w-28" />
+              <button type="button" className="btn border-dark text-xs ml-2">Submit</button>
             </div>
-            <div className='flex justify-content-around mt-2'>
-              <p className="font-weight-bold text-xs text-secondary">Mobile Version</p>
-              <img src={Group_5} width={100} height={1} alt="group" />
+            <div className="flex justify-center mt-2">
+              <p className="font-bold text-xs text-secondary">Mobile Version</p>
+              <img src={Group_5} width={100} height={1} alt="group" className="ml-2" />
             </div>
           </div>
         </div>
 
-        <div className="copy-right-sec mt-1 p-3">
+        {/* Copy Right Section */}
+        <div className="copy-right-sec mt-1">
           <p className="copy-right text-xs">Copyright © safe-easy-online.com. All rights reserved</p>
         </div>
       </div>

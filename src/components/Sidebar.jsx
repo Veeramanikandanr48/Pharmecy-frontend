@@ -25,7 +25,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen p-5 gap-3">
+    <div className="hidden lg:flex flex-col min-h-screen p-5 gap-3">
       <h1 className="border-b py-2">Categories List</h1>
       <ul className="flex flex-col text-xs gap-2 text-gray-600">
         {categories.map((category, index) => (

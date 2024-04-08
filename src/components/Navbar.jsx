@@ -1,68 +1,139 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from '../../src/media/logo - Copy.png';
 
 const Navbar = () => {
-  return (
-    <div className="w-full h-10 bg-[#3C3C3C] flex items-center px-6 justify-between text-white">
-      <ul className="flex gap-8 items-center text-xs">
-        <NavItem to="/">Home</NavItem>
-        <NavItem to="/order-status">Order Status</NavItem>
-        <NavItem to="/faq">FAQ</NavItem>
-        <NavItem to="/contact-us">Contact Us</NavItem>
-        <NavItem to="/testimonials">Testimonials</NavItem>
-      </ul>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-      <ul className="flex items-center gap-8">
-        <li className="text-sm font-medium">
-          US Toll Free: <span className="text-green-500">+1 888 524 7161</span>
-        </li>
-        <li className="text-sm font-medium text-green-500 hover:text-gray-400 transition duration-300">
-          Live Chat Online
-        </li>
-        <li className="relative">
-          <select
-            name="lang"
-            id="Lang"
-            className="px-2 bg-white text-black border border-white text-sm font-medium focus:outline-none focus:border-gray-400"
-          >
-            <option value="English">🇺🇸 English</option>
-            <option value="Spanish">🇪🇸 Spanish</option>
-            <option value="French">🇫🇷 French</option>
-            <option value="German">🇩🇪 German</option>
-            <option value="Italian">🇮🇹 Italian</option>
-            <option value="Chinese">🇨🇳 Chinese</option>
-            <option value="Japanese">🇯🇵 Japanese</option>
-            {/* Add more language options and corresponding flags as needed */}
-          </select>
-        </li>
-        <li className="relative">
-          <select
-            name="currency"
-            id="Currency"
-            className="px-2 bg-white text-black border border-white text-sm font-medium focus:outline-none focus:border-gray-400"
-          >
-            <option value="USD">USD $</option>
-            <option value="EUR">EUR €</option>
-            <option value="GBP">GBP £</option>
-            <option value="JPY">JPY ¥</option>
-            {/* Add more currency options as needed */}
-          </select>
-        </li>
-      </ul>
-    </div>
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <nav className="bg-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Mobile Menu Icon */}
+          <div className="-mr-2 flex md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
+            >
+              <svg
+                className="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Logo */}
+          <div className=" lg:hidden flex items-center justify-center w-full lg:w-auto lg:flex-shrink-0">
+            <Link to="/">
+              <img
+                src={logo}
+                width={100}
+                height={100}
+                alt="logo"
+              />
+            </Link>
+          </div>
+
+          {/* Cart Icon for Mobile */}
+          <div className="flex-shrink-0 lg:hidden text-right pr-3">
+            <Link to="/cart" className="text-white hover:text-gray-300">
+              Cart
+            </Link>
+          </div>
+
+          {/* Desktop NavItems */}
+          <div className="hidden lg:flex items-center">
+            <NavItem to="/">Home</NavItem>
+            <NavItem to="/order-status">Order Status</NavItem>
+            <NavItem to="/faq">FAQ</NavItem>
+            <NavItem to="/contact-us">Contact Us</NavItem>
+            <NavItem to="/testimonials">Testimonials</NavItem>
+          </div>
+
+          {/* Additional Items for Desktop */}
+          <ul className="hidden lg:flex items-center gap-8">
+            <li className="text-sm font-medium">
+              US Toll Free: <span className="text-green-500">+1 888 524 7161</span>
+            </li>
+            <li className="text-sm font-medium text-green-500 hover:text-gray-400 transition duration-300">
+              Live Chat Online
+            </li>
+            <li className="relative">
+              <select
+                name="lang"
+                id="Lang"
+                className="px-2 bg-white text-black border border-white text-sm font-medium focus:outline-none focus:border-gray-400"
+              >
+                <option value="English">🇺🇸 English</option>
+                <option value="Spanish">🇪🇸 Spanish</option>
+                <option value="French">🇫🇷 French</option>
+                <option value="German">🇩🇪 German</option>
+                <option value="Italian">🇮🇹 Italian</option>
+                <option value="Chinese">🇨🇳 Chinese</option>
+                <option value="Japanese">🇯🇵 Japanese</option>
+                {/* Add more language options and corresponding flags as needed */}
+              </select>
+            </li>
+            <li className="relative">
+              <select
+                name="currency"
+                id="Currency"
+                className="px-2 bg-white text-black border border-white text-sm font-medium focus:outline-none focus:border-gray-400"
+              >
+                <option value="USD">USD $</option>
+                <option value="EUR">EUR €</option>
+                <option value="GBP">GBP £</option>
+                <option value="JPY">JPY ¥</option>
+                {/* Add more currency options as needed */}
+              </select>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <ul className="text-white text-xs flex flex-col items-center p-3 list-none">
+              <NavItem to="/" onClick={toggleMenu}>Home</NavItem>
+              <NavItem to="/order-status" onClick={toggleMenu}>Order Status</NavItem>
+              <NavItem to="/faq" onClick={toggleMenu}>FAQ</NavItem>
+              <NavItem to="/contact-us" onClick={toggleMenu}>Contact Us</NavItem>
+              <NavItem to="/testimonials" onClick={toggleMenu}>Testimonials</NavItem>
+            </ul>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
-const NavItem = ({ to, children }) => {
+const NavItem = ({ to, children, onClick }) => {
   return (
-    <>
-      <li className="text-xs font-medium">
-        <Link to={to}>{children}</Link>
-      </li>
-      <div className="h-6 border-r border-white"></div>
-    </>
+    <Link
+      to={to}
+      onClick={onClick}
+      className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-300"
+    >
+      {children}
+    </Link>
   );
 };
-
 
 export default Navbar;

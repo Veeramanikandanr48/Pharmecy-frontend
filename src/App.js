@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Header from "./components/Header";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import ProductDetails from "./Pages/ProductDetails";
-import Sidebar from "./components/Sidebar";
 import Cart from "./Pages/Cart";
-import TestComponent from '../src/Data/TestComponent'
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [selectedLetter, setSelectedLetter] = useState(null);
@@ -20,9 +17,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <Header handleLetterClick={handleLetterClick} /> {/* Pass the handleLetterClick function */}
-      <div className="flex flex-col lg:flex-row">
-        <Sidebar />
+      <Header handleLetterClick={handleLetterClick} />
         <Routes>
           <Route
             path="/"
@@ -31,10 +26,7 @@ const App = () => {
           <Route path="/category/:categoryName" element={<Home selectedLetter={selectedLetter} />} />
           <Route path="/product/:productName" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/test" element={<TestComponent/>}/>
         </Routes>
-      </div>
-      <Footer />
     </Router>
   );
 };
