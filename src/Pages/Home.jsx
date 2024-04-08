@@ -68,7 +68,7 @@ const ProductGrid = ({ products }) => (
 
 
 const ProductCard = ({ product }) => (
-  <div className="product-card border rounded-lg overflow-hidden">
+  <div className="product-card border rounded-lg overflow-hidden w-full sm:w-auto lg:w-auto">
     <div className="p-2">
       <h1 className="text-base sm:text-lg lg:text-xl font-semibold mb-2">{product.Name}</h1>
       <img
