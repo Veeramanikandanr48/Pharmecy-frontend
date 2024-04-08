@@ -2,28 +2,25 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 
-const Header = ({ handleLetterClick, products }) => {
+const Header = ({ handleLetterClick, handleCategoryChange }) => {
   // State to store cart items
   const [cartItems, setCartItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("Bestsellers");
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // Define a function to get the cart items from local storage
+  // Retrieve cart items from local storage
   const getCartItemsFromLocalStorage = useCallback(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   }, []);
 
-  // Effect to retrieve and update cart items from local storage
+  // Update cart items state from local storage
   useEffect(() => {
-    // Retrieve cart items from local storage
     const storedCartItems = getCartItemsFromLocalStorage();
-
-    // Update the cart items state
     setCartItems(storedCartItems);
-  }, [getCartItemsFromLocalStorage]); // Now useCallback ensures this function doesn't change on re-renders
+  }, [getCartItemsFromLocalStorage]);
 
+  // Constants
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
   const categories = [
     "Bestsellers", "COVID-19", "Allergy", "Anti Viral", "Anti-Depressants",
     "Antibacterial", "Antibiotics", "Arthritis", "Asthma", "Birth Control",
@@ -35,7 +32,8 @@ const Header = ({ handleLetterClick, products }) => {
     "Weight Loss"
   ];
 
-  const handleCategoryChange = (category) => {
+  // Handle category click event
+  const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setShowDropdown(false);
   };
@@ -142,16 +140,17 @@ const Header = ({ handleLetterClick, products }) => {
               <div className="bg-gray-800 rounded-md shadow-lg">
                 <div className="py-1">
                   {categories.map((category, index) => (
-                    <button
+                    <Link
                       key={index}
-                      onClick={() => handleCategoryChange(category)}
+                      to={`/category/${category}`}
+                      onClick={() => handleCategoryClick(category)}
                       className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 ${
                         selectedCategory === category ? 'bg-gray-700' : ''
                       }`}
                       style={{ fontSize: "0.75rem" }}
                     >
                       {category}
-                    </button>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -162,6 +161,5 @@ const Header = ({ handleLetterClick, products }) => {
     </>
   );
 };
-
 
 export default Header;
