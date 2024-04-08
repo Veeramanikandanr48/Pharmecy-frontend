@@ -70,16 +70,18 @@ const ProductGrid = ({ products }) => (
 const ProductCard = ({ product }) => (
   <div className="product-card border rounded-lg overflow-hidden">
     <div className="p-2">
-      <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2">{product.Name}</h1>
+      <h1 className="text-base sm:text-lg lg:text-xl font-semibold mb-2">{product.Name}</h1>
       <img
         src={product.URL}
         alt={product.name}
         title={product.name}
+        width={30}
+        height={30}
         className="w-full h-auto mb-2"
       />
       <p className="text-xs sm:text-sm lg:text-base text-blue-400 mb-1">{product.packaging}</p>
       <div className="flex justify-between items-center">
-        <p className="text-lg sm:text-base lg:text-lg font-semibold">{product["Discount price1"]}</p>
+        <p className="text-base sm:text-lg lg:text-xl font-semibold">{product["Discount price1"]}</p>
         <Link
           to={`/product/${product._id}`}
           className="px-3 py-1 text-xs sm:text-sm lg:text-base text-white bg-blue-500 rounded-md"
@@ -93,6 +95,5 @@ const ProductCard = ({ product }) => (
     </div>
   </div>
 );
-
 
 export default Home;
