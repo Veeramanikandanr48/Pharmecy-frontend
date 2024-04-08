@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5 text-sm text-left">
 
           {/* Home, Contact Us, About Us */}
-          <div className="mb-3 text-sm">
+          <div className="text-sm">
             <ul className="list-none">
               <li>Home</li>
               <li>Contact Us</li>
@@ -19,7 +19,7 @@ const Footer = () => {
           </div>
 
           {/* Our Policy, Terms & Conditions, Sitemap */}
-          <div className="mb-3 text-sm">
+          <div className="text-sm">
             <ul className="list-none">
               <li>Our Policy</li>
               <li>Terms & Conditions</li>
@@ -28,14 +28,14 @@ const Footer = () => {
           </div>
 
           {/* Payment Options */}
-          <div className="mb-2 text-xs">
+          <div className="text-xs">
             <p className="font-bold">Payment Options</p>
             <img src={payment} width={200} height={40} alt="payment" className="mt-2 mx-auto" />
             <p className="text-xs text-secondary mt-2">Products are not appeared on your credit card statement</p>
           </div>
 
           {/* Secure Payment Process */}
-          <div className="mb-2 text-xs">
+          <div className="text-xs">
             <p className="font-bold">Secure Payment Process</p>
             <img src={securePay} width={200} height={40} alt="secure_payment" className="mt-2 mx-auto" />
             <p className="text-xs text-secondary mt-2">See links to the certificates at Secure Checkout Page</p>
