@@ -34,10 +34,7 @@ const Header = ({ handleLetterClick, onSearch }) => {
     setCartItems(storedCartItems);
   }, [getCartItemsFromLocalStorage]);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const categories = [
-    // Categories list...
-  ];
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
