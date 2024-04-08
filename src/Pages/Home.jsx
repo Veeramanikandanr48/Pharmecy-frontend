@@ -58,7 +58,7 @@ const ErrorMessage = ({ error }) => (
 const ProductGrid = ({ products, selectedCategory }) => (
   <div>
     <h1 className="h1 lg:hidden p-2">{selectedCategory}</h1>
-    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
       {products.map((product) => (
         <ProductCard key={product._id} product={product} />
       ))}
@@ -69,22 +69,26 @@ const ProductGrid = ({ products, selectedCategory }) => (
 
 
 const ProductCard = ({ product }) => (
-  <div className="product-card border rounded-lg overflow-hidden w-full">
-    <div className="p-4">
-      <h1 className="text-lg font-semibold mb-2">{product.Name}</h1>
-      <img src={product.URL} alt={product.name} title={product.name} className="w-full h-auto mb-2" />
-      <p className="text-sm text-blue-400 mb-2">{product.packaging}</p>
+  <div className="product-card border rounded-lg overflow-hidden w-auto">
+    <div className="p-3">
+      <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
+      <div className="flex justify-center">
+        <img src={product.URL} alt={product.name} title={product.name} className="w-auto h-auto mb-2" />
+      </div>
+      <p className="text-xs text-blue-400 mb-2">{product.packaging}</p>
       <div className="flex justify-between items-center">
-        <p className="text-lg font-semibold">{product["Discount price1"]}</p>
-        <Link to={`/product/${product._id}`} className="px-3 py-1 text-sm text-white bg-blue-500 rounded-md">
+        <p className="text-sm font-semibold">{product["Discount price1"]}</p>
+        <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-blue-500 rounded-md">
           SELECT PACK
         </Link>
       </div>
-      <p className="mt-2 text-sm text-red-600">
+      <p className="mt-2 text-xs text-red-600">
         Manufacturer's Suggested Retail Price {product["Original price1"]}
       </p>
     </div>
   </div>
 );
+
+
 
 export default Home;
