@@ -61,8 +61,8 @@ const Cart = () => {
 
   return (
     <Layout>
-      <div className="container my-5 p-5">
-        <div className="title-cart h4 mt-4 mb-4 text-center">Your cart</div>
+      <div className="container my-3 p-3">
+        <div className="title-cart h4 mb-4 text-center">Your cart</div>
         {cartItems.length > 0 ? (
           <div className="table-responsive">
             <Table striped bordered hover>
