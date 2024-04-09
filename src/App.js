@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import Navbar from "./components/Navbar";
+import FAQPage from "./Pages/Faq";
 
 const App = () => {
   const [selectedLetter, setSelectedLetter] = useState(null);
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/product/:productName" element={<ProductDetails />} />
         {/* Route for cart */}
         <Route path="/cart" element={<Cart />} />
+        <Route path="/faq" element={<FAQPage />} />
       </Routes>
     </Router>
   );

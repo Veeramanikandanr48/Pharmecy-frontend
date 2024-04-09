@@ -201,14 +201,14 @@ const Cart = () => {
             </div>
           </div>
         </div>
-
-        <div className="py-3 gap-3">
-          <h4 className="h6 text-center">OUR BESTSELLERS:</h4>
+<div className="hidden lg:flex flex-column">
+        <div className="py-5 gap-3">
+          <h4 className="h4 text-center">OUR BESTSELLERS:</h4>
           <hr />
         </div>
         <div className="grid grid-cols-2 gap-3 justify-center md:grid-cols-4">
   {filteredProducts.map((product, index) => (
-    <div key={product.URL} className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md">
+    <div key={product.URL} className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4">
       <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
       <div className="flex justify-center">
         <img src={product.URL} alt={product.name} title={product.name} className="w-auto h-auto mb-2" />
@@ -225,7 +225,7 @@ const Cart = () => {
       </p>
     </div>
   ))}
-</div>
+</div></div>
       </div>
     </Layout>
   );

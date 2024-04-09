@@ -31,7 +31,7 @@ const Home = ({ selectedLetter, searchValue }) => {
 
   return (
     <Layout>
-      <div className="w-full flex flex-col p-3 min-vh-50">
+      <div className="w-full flex flex-col p-3 min-vh-100">
         <Carousel />
         <div className="relative">
           {loading && <LoadingSpinner />}
