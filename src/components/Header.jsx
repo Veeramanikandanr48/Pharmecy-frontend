@@ -18,15 +18,23 @@ const Header = ({ handleLetterClick, onSearch }) => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   }, []);
 
+  const categories = [
+    "Bestsellers", "COVID-19", "Allergy", "Anti Viral", "Anti-Depressants",
+    "Antibacterial", "Antibiotics", "Arthritis", "Asthma", "Birth Control",
+    "Cancer", "Blood Pressure", "Cholesterol", "Cardiovascular", "Diabetes",
+    "Diuretics", "Erectile Dysfunction", "Eye Drop", "Gastro Health", "Hair Loss",
+    "General Health", "Hepatitis C Virus (HCV)", "Herbals", "Hormones", "HIV",
+    "Men's ED Packs", "Men's Health", "Mental Illness", "Motion Sickness",
+    "Muscle Relaxant", "Pain Relief", "Quit Smoking", "Skin Care", "Women's Health",
+    "Weight Loss"
+  ];
+
   useEffect(() => {
     const storedCartItems = getCartItemsFromLocalStorage();
     setCartItems(storedCartItems);
   }, [getCartItemsFromLocalStorage]);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const categories = [
-    // Categories list...
-  ];
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
