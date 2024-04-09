@@ -33,7 +33,7 @@ const Home = ({ selectedLetter, searchValue }) => {
     <Layout>
       <div className="w-full flex flex-col p-3 min-vh-100">
         <Carousel />
-        <div className="relative">
+        <div className="relative flex-1">
           {loading && <LoadingSpinner />}
           {!loading && !error && <ProductGrid key={selectedCategory} products={selectedProducts} selectedCategory={selectedCategory} />}
           {error && <ErrorMessage error={error} />}
@@ -77,7 +77,8 @@ const ProductCard = ({ product }) => (
       <div className="flex justify-between items-center">
         <p className="text-sm font-semibold">{product["Discount price1"]}</p>
         <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-green-500 rounded-md">
-          SELECT PACK
+          <span className="hidden sm:inline">SELECT PACK</span>
+          <span className="sm:hidden">Select</span>
         </Link>
       </div>
       <p className="mt-2 text-xs text-red-600">

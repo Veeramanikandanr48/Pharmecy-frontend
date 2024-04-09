@@ -74,7 +74,7 @@ const FAQ = () => {
 
   return (
     <Layout>
-    <div className="container mx-auto mt-5 px-4 min-vh-100">
+    <div className="container mx-auto my-5 px-4 min-vh-100">
       <h1 className="text-center text-3xl font-semibold mb-8">Frequently Asked Questions</h1>
       <dl className="space-y-4">
         {faqData.map((faq, index) => (
