@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 
-const Header = ({ handleLetterClick, onSearch }) => {
+const Header = ({
+  handleLetterClick,
+  onSearch,
+  cartItemCount, // New prop to receive cart item count
+}) => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Bestsellers");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -34,7 +38,7 @@ const Header = ({ handleLetterClick, onSearch }) => {
     setCartItems(storedCartItems);
   }, [getCartItemsFromLocalStorage]);
 
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
@@ -105,25 +109,15 @@ const Header = ({ handleLetterClick, onSearch }) => {
             YOUR CART/CHECKOUT
           </h2>
           {/* Cart items */}
-          {cartItems.length === 0 ? (
-            <div className="data flex flex-col items-center gap-2">
-              <p className="text-[0.7rem] text-center text-gray-400">
-                You have no items in your shopping cart.
-              </p>
-              <button className="bg-green-500 p-2 text-[0.8rem] border-green-500 text-white">
-                <Link to="/cart">Continue Shopping</Link>
-              </button>
-            </div>
-          ) : (
-            <div className="data flex flex-col items-center gap-2">
-              <p className="text-[0.9rem] text-gray-600">
-                {cartItems.length} {cartItems.length === 1 ? "item" : "items"}
-              </p>
-              <button className="bg-green-500 p-2 text-[0.8rem] border-green-500 text-white">
-                <Link to="/cart">View Cart</Link>
-              </button>
-            </div>
-          )}
+          <div className="data flex flex-col items-center gap-2">
+  <p className="text-[0.9rem] text-gray-600">
+    {cartItemCount === 0 ? "Empty" : cartItemCount}
+  </p>
+  <button className="bg-green-500 p-2 text-[0.8rem] border-green-500 text-white">
+    <Link to="/cart">View Cart</Link>
+  </button>
+</div>
+
         </div>
       </div>
       {/* Mobile Header */}

@@ -6,7 +6,7 @@ import useProductData from "../Data/useProductData";
 import Layout from "../Layout";
 import { Table } from 'react-bootstrap';
 
-const Cart = () => {
+const Cart = ({ updateCartItemNumber }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
@@ -21,17 +21,21 @@ const Cart = () => {
   useEffect(() => {
     const cartData = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItems(cartData);
-  }, []);
+    // Update cart item number in the header
+    updateCartItemNumber(cartData.length);
+  }, [updateCartItemNumber]);
 
   const removeFromCart = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.Id !== productId);
+    const updatedCart = cartItems.filter((item) => item.uid !== productId);
     setCartItems(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // Update cart item number in the header
+    updateCartItemNumber(updatedCart.length);
   };
 
   const decreaseQuantity = (productId) => {
     const updatedCart = cartItems.map((item) =>
-      item.Id === productId
+      item.uid === productId
         ? { ...item, nextQuantity: Math.max(item.nextQuantity - 1, 1) }
         : item
     );
@@ -41,7 +45,7 @@ const Cart = () => {
 
   const increaseQuantity = (productId) => {
     const updatedCart = cartItems.map((item) =>
-      item.Id === productId
+      item.uid === productId
         ? { ...item, nextQuantity: item.nextQuantity + 1 }
         : item
     );
@@ -100,12 +104,12 @@ const Cart = () => {
                       <div className="d-flex align-items-center">
                         <button
                           className="quant-minus btn btn-sm bg-secondary text-white"
-                          onClick={() => decreaseQuantity(item.Id)}
+                          onClick={() => decreaseQuantity(item.uid)}
                         >
                           -
                         </button>
                         <input
-                          name={`p[${item.Id}]`}
+                          name={`p[${item.uid}]`}
                           className="quant form-control mx-1 text-center"
                           type="text"
                           style={{ width: "45px", height: "25px" }}
@@ -115,7 +119,7 @@ const Cart = () => {
                         />
                         <button
                           className="quant-plus btn btn-sm bg-secondary text-white"
-                          onClick={() => increaseQuantity(item.Id)}
+                          onClick={() => increaseQuantity(item.uid)}
                         >
                           +
                         </button>
@@ -130,7 +134,7 @@ const Cart = () => {
                     <td>
                       <button
                         className="btn text-danger"
-                        onClick={() => removeFromCart(item.Id)}
+                        onClick={() => removeFromCart(item.uid)}
                       >
                         <FaTrash />
                       </button>

@@ -27,10 +27,22 @@ const ProductDetails = () => {
 
   const handleRowClick = (rowData) => {
     let existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const updatedCart = [...existingCart, rowData];
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    const existingItemIndex = existingCart.findIndex((item) => item.Id === rowData.Id && item.noOfPacks === rowData.noOfPacks);
+    
+    if (existingItemIndex !== -1) {
+      // If the product with the same ID and number of packs already exists in the cart, increment its quantity by 1
+      existingCart[existingItemIndex].nextQuantity += 1;
+    } else {
+      // If the product doesn't exist in the cart or has a different number of packs, add it with a quantity of 1
+      // Generate a unique ID for the cart item
+      const uid = Math.random().toString(36).substr(2, 9);
+      existingCart.push({ ...rowData, nextQuantity: 1, uid });
+    }
+  
+    localStorage.setItem("cart", JSON.stringify(existingCart));
     navigate("/cart");
   };
+  
 
   if (loading) {
     return (
@@ -113,8 +125,6 @@ const ProductDetails = () => {
                               Id: productName,
                               Name: product.Name,
                               imageURL: product.URL,
-                              discountPrice,
-                              grossPrice,
                               originalPrice,
                               noOfPacks,
                               Mg: product.packaging,

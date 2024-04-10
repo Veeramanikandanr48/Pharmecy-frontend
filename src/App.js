@@ -9,8 +9,15 @@ import FAQPage from "./Pages/Faq";
 import CheckoutPage from "./Pages/Checkout";
 
 const App = () => {
+  // State variables for selected letter and search value
   const [selectedLetter, setSelectedLetter] = useState(null);
-  const [searchValue, setSearchValue] = useState(""); // State variable to hold search value
+  const [searchValue, setSearchValue] = useState("");
+  const [cartItemCount, setCartItemCount] = useState(0); // Initialize cart item count state
+
+  // Function to update cart item number
+  const updateCartItemNumber = (count) => {
+    setCartItemCount(count);
+  };
 
   // Function to handle letter click event
   const handleLetterClick = (letter) => {
@@ -19,17 +26,18 @@ const App = () => {
 
   // Function to handle search
   const onSearch = (searchValue) => {
-    setSearchValue(searchValue); // Update searchValue state variable
+    setSearchValue(searchValue);
   };
 
   return (
     <Router>
       {/* Render Navbar */}
       <Navbar />
-      {/* Render Header and pass handleLetterClick and onSearch functions as props */}
+      {/* Render Header and pass handleLetterClick, onSearch, and cartItemCount as props */}
       <Header
         handleLetterClick={handleLetterClick}
-        onSearch={onSearch} // Pass onSearch function as prop
+        onSearch={onSearch}
+        cartItemCount={cartItemCount} // Pass the cartItemCount prop
       />
       {/* Define routes */}
       <Routes>
@@ -46,8 +54,10 @@ const App = () => {
         {/* Route for product details */}
         <Route path="/product/:productName" element={<ProductDetails />} />
         {/* Route for cart */}
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart updateCartItemNumber={updateCartItemNumber} />} />
+        {/* Route for FAQ page */}
         <Route path="/faq" element={<FAQPage />} />
+        {/* Route for checkout page */}
         <Route path="/checkout" element={<CheckoutPage/>}/>
       </Routes>
     </Router>
