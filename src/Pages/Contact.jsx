@@ -14,7 +14,7 @@ const ContactFormWithInfo = () => {
   };
 
   const emailContent = {
-    recipient: "example@example.com",
+    recipient: "contact@budgetmeds.com",
     subject: "Message from Contact Form",
     body: "Dear recipient,\n\nI am writing to you regarding...",
   };
