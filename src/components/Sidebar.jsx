@@ -63,6 +63,10 @@ const Sidebar = () => {
           ))}
         </ul>
       )}
+      {/* Navigation to Contact Us page */}
+      <Link to="/contact-us" className="block border border-blue-500 bg-blue-500 text-white font-bold py-2 px-4 rounded-full text-center mt-4 hover:bg-blue-700 hover:border-blue-700">
+        Contact Us
+      </Link>
       <h1 className="border-b py-2">Shipping option</h1>
       <img src={card_content} alt="card-c" className="mb-5"/>
     </div>

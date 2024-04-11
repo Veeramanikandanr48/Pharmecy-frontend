@@ -754,14 +754,7 @@ const CheckoutPage = () => {
               </div>
             ) : (
               <div>
-                <h2 className="text-lg font-bold mb-3">Cart Products</h2>
-                <div className="table-responsive w-75 mx-auto">
-                  {/* Table rendering code */}
-                </div>
                 <div className="text-center">
-                  <h4>
-                    Total Price: ${calculateTotalPrice(cartProducts).toFixed(2)}
-                  </h4>
                   <button
                     type="submit"
                     onClick={handleSubmit}

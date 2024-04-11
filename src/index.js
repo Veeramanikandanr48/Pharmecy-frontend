@@ -1,13 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Modal from 'react-modal';
+import { createRoot } from 'react-dom/client'; // Import createRoot from react-dom/client
 
-// Set the app element for the modal outside of the root render
-Modal.setAppElement("#root");
+// Get the root DOM element
+const rootElement = document.getElementById('root');
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Set the app element for the modal
+Modal.setAppElement(rootElement);
+
+// Create a root using createRoot from react-dom/client
+const root = createRoot(rootElement);
+
+// Render the app inside the root
 root.render(
   <React.StrictMode>
     <App />

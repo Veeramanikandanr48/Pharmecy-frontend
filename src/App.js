@@ -7,6 +7,7 @@ import Cart from "./Pages/Cart";
 import Navbar from "./components/Navbar";
 import FAQPage from "./Pages/Faq";
 import CheckoutPage from "./Pages/Checkout";
+import ContactFormWithInfo from "./Pages/Contact";
 
 const App = () => {
   // State variables for selected letter and search value
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/faq" element={<FAQPage />} />
         {/* Route for checkout page */}
         <Route path="/checkout" element={<CheckoutPage/>}/>
+        <Route path="/contact-us" element={<ContactFormWithInfo/>}/>
       </Routes>
     </Router>
   );
