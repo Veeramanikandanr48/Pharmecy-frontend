@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Footer from "../components/Footer";
 
@@ -26,7 +28,7 @@ const ContactFormWithInfo = () => {
     message: Yup.string().required("Message is required"),
   });
 
-  const onSubmit = (values, { resetForm }) => {
+  const onSubmit = (values, { resetForm, setFieldValue }) => { // Add setFieldValue here
     const { Name, email, phone, country, message } = values;
 
     // Check if all required fields are filled
@@ -60,7 +62,7 @@ const ContactFormWithInfo = () => {
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
               >
-                {({ errors, touched }) => (
+                {({ errors, touched, values, setFieldValue }) => ( // Pass values and setFieldValue here
                   <Form>
                     <div className="mb-4">
                       <FieldWrapper label="Name" name="Name" error={errors.Name} touched={touched.Name}>
@@ -86,13 +88,15 @@ const ContactFormWithInfo = () => {
                     </div>
                     <div className="mb-4">
                       <FieldWrapper label="Phone" name="phone" error={errors.phone} touched={touched.phone}>
-                        <Field
-                          type="tel"
-                          name="phone"
-                          id="phone"
-                          className="form-control"
-                          placeholder="Enter your phone number"
+                        {/* Use the PhoneInput component here */}
+                        <PhoneInput
+                          country={"us"}
+                          value={values.phone}
+                          onChange={(phone) => setFieldValue('phone', phone)}
+                          inputClass="form-control py-3 w-100"
                         />
+                        {/* Display error message if any */}
+                        {errors.phone && touched.phone && <div className="text-danger">{errors.phone}</div>}
                       </FieldWrapper>
                     </div>
                     <div className="mb-4">

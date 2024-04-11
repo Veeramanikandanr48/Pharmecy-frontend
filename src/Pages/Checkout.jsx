@@ -10,13 +10,10 @@ const CheckoutPage = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
 
-  const [sameAsShipping, setSameAsShipping] = useState(true); // State to track if billing address is same as shipping address
+  const [sameAsShipping, setSameAsShipping] = useState(true);
   const [customerInfo, setCustomerInfo] = useState({
     phone: "",
     email: "",
-    birthYear: "",
-    birthMonth: "",
-    birthDay: "",
   });
   const [customerInfoErrors, setCustomerInfoErrors] = useState({});
   const [shippingAddress, setShippingAddress] = useState({
@@ -49,7 +46,6 @@ const CheckoutPage = () => {
   const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
-    // Fetch cart product data from local storage
     const cartData = JSON.parse(localStorage.getItem("cart"));
     if (cartData) {
       setCartProducts(cartData);
@@ -72,22 +68,20 @@ const CheckoutPage = () => {
       setTimeout(() => {
         setPaymentSuccessful(true);
       }, 2000);
-  
+  const totalPrice = calculateTotalPrice(cartProducts);
       const formData = {
         customerInfo,
         shippingAddress,
         billingAddress: sameAsShipping ? shippingAddress : billingAddress,
         paymentInfo,
-        cartProducts,
+        cartProducts,totalPrice,
       };
   
       try {
-        // Send order data to backend
         const response = await fetch("https://pharmecy-backend.onrender.com/orders", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Add any additional headers if needed
           },
           body: JSON.stringify(formData),
         });
@@ -96,11 +90,9 @@ const CheckoutPage = () => {
           throw new Error("Failed to store order details");
         }
   
-        // Clear cart and order details
         clearCartAndOrderDetails();
       } catch (error) {
         console.error("Error:", error.message);
-        // Handle error, show alert, etc.
       }
     } else {
       setCustomerInfoErrors(customerErrors);
@@ -109,31 +101,26 @@ const CheckoutPage = () => {
     }
   };
   
+  
   const handleModalClose = () => {
-    setPaymentSuccessful(false); // Close the modal
-    setRedirectToHome(true); // Redirect to home after modal closes
+    setPaymentSuccessful(false);
+    setRedirectToHome(true);
   };
 
   useEffect(() => {
     if (redirectToHome) {
       setTimeout(() => {
-        navigate("/"); // Redirect to home after 3000ms
+        navigate("/");
       }, 3000);
     }
   }, [redirectToHome, navigate]);
 
-  
   const clearCartAndOrderDetails = () => {
-    // Clear cart and order details from local storage
     localStorage.removeItem("cart");
     localStorage.removeItem("order-details");
-  
-    // Clear cart products state
     setCartProducts([]);
   };
   
-  
-
   const validateCustomerInfo = () => {
     let errors = {};
     if (!customerInfo.phone.trim()) {
@@ -143,15 +130,6 @@ const CheckoutPage = () => {
       errors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(customerInfo.email)) {
       errors.email = "Email is invalid";
-    }
-    if (!customerInfo.birthYear.trim()) {
-      errors.birthYear = "Year is required";
-    }
-    if (!customerInfo.birthMonth.trim()) {
-      errors.birthMonth = "Month is required";
-    }
-    if (!customerInfo.birthDay.trim()) {
-      errors.birthDay = "Day is required";
     }
     return errors;
   };
@@ -200,29 +178,38 @@ const CheckoutPage = () => {
   };
 
   const calculateTotalPrice = (products) => {
-    return products.reduce((total, product) => {
-      return (
-        total +
-        parseFloat(product.originalPrice?.replace("$", "") || 0) *
-          product.nextQuantity
-      );
+    let total = products.reduce((total, product) => {
+        return (
+            total +
+            parseFloat(product.originalPrice?.replace("$", "") || 0) *
+            product.nextQuantity
+        );
     }, 0);
-  };
+
+    // Calculate shipping charges
+    let shippingCost = 0;
+    if (total < 100) {
+        shippingCost = 50;
+    } else if (total < 200) {
+        shippingCost = 30;
+    }
+    total += shippingCost;
+
+    return { total: parseFloat(total.toFixed(2)), shippingCost: parseFloat(shippingCost.toFixed(2)) };
+};
+
 
   const handlePhoneChange = (value) => {
-    // Filter out non-numeric characters
     const numericValue = value.replace(/\D/g, "");
     setCustomerInfo({ ...customerInfo, phone: numericValue });
   };
 
-  // Inside the CheckoutPage component
   const handleDeleteProduct = (index) => {
     const updatedCart = [...cartProducts];
     updatedCart.splice(index, 1);
     setCartProducts(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
 
-    // Remove the product from order details if it exists
     const orderDetails = JSON.parse(localStorage.getItem("order-details"));
     if (orderDetails) {
       const updatedOrderProducts = orderDetails.cartProducts.filter(
@@ -278,83 +265,6 @@ const CheckoutPage = () => {
                   {customerInfoErrors.email && (
                     <div className="text-red-500">
                       {customerInfoErrors.email}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="row mb-4">
-                <div className="col">
-                  <select
-                    className="form-select"
-                    value={customerInfo.birthYear}
-                    onChange={(e) =>
-                      setCustomerInfo({
-                        ...customerInfo,
-                        birthYear: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="">Year</option>
-                    {/* Add options for years */}
-                    {Array.from({ length: 100 }, (_, i) => (
-                      <option key={i} value={2024 - i}>
-                        {2024 - i}
-                      </option>
-                    ))}
-                  </select>
-                  {customerInfoErrors.birthYear && (
-                    <div className="text-red-500">
-                      {customerInfoErrors.birthYear}
-                    </div>
-                  )}
-                </div>
-                <div className="col">
-                  <select
-                    className="form-select"
-                    value={customerInfo.birthMonth}
-                    onChange={(e) =>
-                      setCustomerInfo({
-                        ...customerInfo,
-                        birthMonth: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="">Month</option>
-                    {/* Add options for months */}
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ))}
-                  </select>
-                  {customerInfoErrors.birthMonth && (
-                    <div className="text-red-500">
-                      {customerInfoErrors.birthMonth}
-                    </div>
-                  )}
-                </div>
-                <div className="col">
-                  <select
-                    className="form-select"
-                    value={customerInfo.birthDay}
-                    onChange={(e) =>
-                      setCustomerInfo({
-                        ...customerInfo,
-                        birthDay: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="">Day</option>
-                    {/* Add options for days */}
-                    {Array.from({ length: 31 }, (_, i) => (
-                      <option key={i} value={i + 1}>
-                        {i + 1}
-                      </option>
-                    ))}
-                  </select>
-                  {customerInfoErrors.birthDay && (
-                    <div className="text-red-500">
-                      {customerInfoErrors.birthDay}
                     </div>
                   )}
                 </div>
@@ -515,7 +425,9 @@ const CheckoutPage = () => {
                 />
               </div>
             </form>
-          </div><div className="md:col-span-1 mx-3">
+          </div>
+          
+          <div className="md:col-span-1 mx-3">
             <h2 className="text-lg font-bold mb-3">Payment Info</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -525,11 +437,11 @@ const CheckoutPage = () => {
                   placeholder="Card Number"
                   value={paymentInfo.cardNumber}
                   onChange={(e) => {
-                    const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                    const input = e.target.value.replace(/\D/g, "");
                     setPaymentInfo({
                       ...paymentInfo,
                       cardNumber:
-                        input.length <= 16 ? input : input.slice(0, 16), // Limit to 16 characters
+                        input.length <= 16 ? input : input.slice(0, 16),
                     });
                   }}
                 />
@@ -547,10 +459,10 @@ const CheckoutPage = () => {
                     placeholder="Expiration Month"
                     value={paymentInfo.expMonth}
                     onChange={(e) => {
-                      const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                      const input = e.target.value.replace(/\D/g, "");
                       setPaymentInfo({
                         ...paymentInfo,
-                        expMonth: input.length <= 2 ? input : input.slice(0, 2), // Limit to 2 characters
+                        expMonth: input.length <= 2 ? input : input.slice(0, 2),
                       });
                     }}
                   />
@@ -567,10 +479,10 @@ const CheckoutPage = () => {
                     placeholder="Expiration Year"
                     value={paymentInfo.expYear}
                     onChange={(e) => {
-                      const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                      const input = e.target.value.replace(/\D/g, "");
                       setPaymentInfo({
                         ...paymentInfo,
-                        expYear: input.length <= 4 ? input : input.slice(0, 4), // Limit to 4 characters
+                        expYear: input.length <= 4 ? input : input.slice(0, 4),
                       });
                     }}
                   />
@@ -588,10 +500,10 @@ const CheckoutPage = () => {
                   placeholder="CVC"
                   value={paymentInfo.cvc}
                   onChange={(e) => {
-                    const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                    const input = e.target.value.replace(/\D/g, "");
                     setPaymentInfo({
                       ...paymentInfo,
-                      cvc: input.length <= 3 ? input : input.slice(0, 3), // Limit to 3 characters
+                      cvc: input.length <= 3 ? input : input.slice(0, 3),
                     });
                   }}
                 />
@@ -727,71 +639,86 @@ const CheckoutPage = () => {
               )}
             </form>
           </div>
-
           
           
         </div>
         <div className="text-center">
             {cartProducts.length === 0 ? (
-              ""
-            ) : (
-              <div className="my-4">
-                <h2 className="text-lg font-bold mb-3">Cart Products</h2>
-                <div className="table-responsive w-75 mx-auto">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Product</th>
-                        <th>Name</th>
-                        <th>NextQuantity</th>
-                        <th>Original Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {cartProducts.map((product, index) => (
-                        <tr key={index}>
-                          <td>
-                            <img
-                              src={product.imageURL}
-                              alt={product.Name}
-                              width={50}
-                            />
-                          </td>
-                          <td>
-                            {product.Name}
-                            <p>
-                              {product.Mg}X{product.noOfPacks}
-                            </p>
-                          </td>
-                          <td>{product.nextQuantity}</td>
-                          <td>
-                            $
-                            {(
-                              parseFloat(
-                                product.originalPrice?.replace("$", "") || 0
-                              ) * product.nextQuantity
-                            ).toFixed(2)}
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => handleDeleteProduct(index)}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="text-center">
-                  <h4>
-                    Total Price: ${calculateTotalPrice(cartProducts).toFixed(2)}
-                  </h4>
-                </div>
-              </div>
-            )}
+  ""
+) : (
+  <div className="my-4">
+    <h2 className="text-lg font-bold mb-3">Cart Products</h2>
+    <div className="table-responsive w-75 mx-auto">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Name</th>
+            <th>NextQuantity</th>
+            <th>Original Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cartProducts.map((product, index) => (
+            <tr key={index}>
+              <td>
+                <img
+                  src={product.imageURL}
+                  alt={product.Name}
+                  width={50}
+                />
+              </td>
+              <td>
+                {product.Name}
+                <p>
+                  {product.Mg}X{product.noOfPacks}
+                </p>
+              </td>
+              <td>{product.nextQuantity}</td>
+              <td>
+                $
+                {(
+                  parseFloat(
+                    product.originalPrice?.replace("$", "") || 0
+                  ) * product.nextQuantity
+                ).toFixed(2)}
+              </td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteProduct(index)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+          
+        </tbody>
+      </table>
+    </div><div className="flex flex-col items-center justify-start">
+  <div className="w-64">
+    <div className="flex justify-around text-center">
+      <h1 className="text-left">Shipping Cost</h1>
+      {calculateTotalPrice(cartProducts).shippingCost === 0 ? (
+        <p>Free</p>
+      ) : (
+        <p>${calculateTotalPrice(cartProducts).shippingCost.toFixed(2)}</p>
+      )}
+    </div>
+  </div>
+  <div className="w-64">
+    <div className="flex justify-around text-center">
+      <h1 className="text-left">Total Price</h1>
+      <p>${calculateTotalPrice(cartProducts).total.toFixed(2)}</p>
+    </div>
+  </div>
+</div>
+  </div>
+)}
+
+
+
             {cartProducts.length === 0 ? (
               <div className="text-center">
                 <h2>Your cart is empty</h2>

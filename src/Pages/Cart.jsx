@@ -4,7 +4,7 @@ import { LuGift } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import useProductData from "../Data/useProductData";
 import Layout from "../Layout";
-import { Table } from 'react-bootstrap';
+import { Table } from "react-bootstrap";
 
 const Cart = ({ updateCartItemNumber }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -60,8 +60,16 @@ const Cart = ({ updateCartItemNumber }) => {
         parseFloat(item.originalPrice?.replace("$", "") || 0) *
         item.nextQuantity;
     });
-    return total;
+    let shippingCost = 0;
+    if (total < 100) {
+      shippingCost = 50;
+    } else if (total < 200) {
+      shippingCost = 30;
+    } // No shipping cost if total is $200 or more
+    return { total, shippingCost };
   };
+
+  const { total, shippingCost } = totalAmount();
 
   return (
     <Layout>
@@ -129,7 +137,11 @@ const Cart = ({ updateCartItemNumber }) => {
                       {item.originalPrice}
                     </td>
                     <td className="text-bold h6">
-                      ${(parseFloat(item.originalPrice?.replace("$", "") || 0) * item.nextQuantity).toFixed(2)}
+                      $
+                      {(
+                        parseFloat(item.originalPrice?.replace("$", "") || 0) *
+                        item.nextQuantity
+                      ).toFixed(2)}
                     </td>
                     <td>
                       <button
@@ -142,11 +154,21 @@ const Cart = ({ updateCartItemNumber }) => {
                   </tr>
                 ))}
                 <tr>
-                  <td colSpan="3" className="font-weight-bold text-left">Pay for all items:</td>
+                  <td colSpan="3" className="font-weight-bold text-left">
+                    Shipping Cost:
+                  </td>
                   <td className="font-weight-bold h6">
-  ${totalAmount().toFixed(2)}
-</td>
-
+                    {shippingCost === 0
+                      ? "Free"
+                      : `$${shippingCost.toFixed(2)}`}
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colSpan="3" className="font-weight-bold text-left">
+                    Pay for all items:
+                  </td>
+                  <td className="font-weight-bold h6">${total.toFixed(2)}</td>
                   <td></td>
                 </tr>
               </tbody>
@@ -205,31 +227,48 @@ const Cart = ({ updateCartItemNumber }) => {
             </div>
           </div>
         </div>
-<div className="hidden lg:flex flex-column">
-        <div className="py-5 gap-3">
-          <h4 className="h4 text-center">OUR BESTSELLERS:</h4>
-          <hr />
+        <div className="hidden lg:flex flex-column">
+          <div className="py-5 gap-3">
+            <h4 className="h4 text-center">OUR BESTSELLERS:</h4>
+            <hr />
+          </div>
+          <div className="grid grid-cols-2 gap-3 justify-center md:grid-cols-4">
+            {filteredProducts.map((product, index) => (
+              <div
+                key={product.URL}
+                className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4"
+              >
+                <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
+                <div className="flex justify-center">
+                  <img
+                    src={product.URL}
+                    alt={product.name}
+                    title={product.name}
+                    className="w-auto h-auto mb-2"
+                  />
+                </div>
+                <p className="text-xs text-blue-400 mb-2">
+                  {product.packaging}
+                </p>
+                <div className="flex justify-between items-center">
+                  <p className="text-sm font-semibold">
+                    {product["Discount price1"]}
+                  </p>
+                  <Link
+                    to={`/product/${product._id}`}
+                    className="px-2 py-1 text-xs text-white bg-green-500 rounded-md"
+                  >
+                    SELECT PACK
+                  </Link>
+                </div>
+                <p className="mt-2 text-xs text-red-600">
+                  Manufacturer's Suggested Retail Price{" "}
+                  {product["Original price1"]}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-3 justify-center md:grid-cols-4">
-  {filteredProducts.map((product, index) => (
-    <div key={product.URL} className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4">
-      <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
-      <div className="flex justify-center">
-        <img src={product.URL} alt={product.name} title={product.name} className="w-auto h-auto mb-2" />
-      </div>
-      <p className="text-xs text-blue-400 mb-2">{product.packaging}</p>
-      <div className="flex justify-between items-center">
-        <p className="text-sm font-semibold">{product["Discount price1"]}</p>
-        <Link to={`/product/${product._id}`} className="px-2 py-1 text-xs text-white bg-green-500 rounded-md">
-          SELECT PACK
-        </Link>
-      </div>
-      <p className="mt-2 text-xs text-red-600">
-        Manufacturer's Suggested Retail Price {product["Original price1"]}
-      </p>
-    </div>
-  ))}
-</div></div>
       </div>
     </Layout>
   );

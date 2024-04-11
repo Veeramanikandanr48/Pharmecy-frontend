@@ -36,9 +36,16 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
+          
+          {/* Desktop NavItems */}
+          <div className="hidden lg:flex items-center">
+            <NavItem to="/">Home</NavItem>
+            <NavItem to="/faq">FAQ</NavItem>
+            <NavItem to="/contact-us">Contact Us</NavItem>
+          </div>
 
           {/* Mobile Logo */}
-          <div className=" lg:hidden flex items-center justify-center w-full lg:w-auto lg:flex-shrink-0">
+          <div className="flex items-center justify-center w-full lg:w-auto lg:flex-shrink-0">
             <Link to="/">
               <img
                 src={logo}
@@ -56,12 +63,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop NavItems */}
-          <div className="hidden lg:flex items-center">
-            <NavItem to="/">Home</NavItem>
-            <NavItem to="/faq">FAQ</NavItem>
-            <NavItem to="/contact-us">Contact Us</NavItem>
-          </div>
+          
 
           {/* Additional Items for Desktop */}
           <ul className="hidden lg:flex items-center gap-8">
