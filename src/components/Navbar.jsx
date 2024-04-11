@@ -40,6 +40,7 @@ const Navbar = () => {
           {/* Desktop NavItems */}
           <div className="hidden lg:flex items-center">
             <NavItem to="/">Home</NavItem>
+            <NavItem to="/category/offer">Offers</NavItem>
             <NavItem to="/faq">FAQ</NavItem>
             <NavItem to="/contact-us">Contact Us</NavItem>
           </div>
@@ -112,6 +113,7 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <ul className="text-white text-xs flex flex-col items-center p-3 list-none">
               <NavItem to="/" onClick={toggleMenu}>Home</NavItem>
+              <NavItem to="/category/offer" onClick={toggleMenu}>Offers</NavItem>
               <NavItem to="/faq" onClick={toggleMenu}>FAQ</NavItem>
               <NavItem to="/contact-us" onClick={toggleMenu}>Contact Us</NavItem>
             </ul>
