@@ -1,43 +1,57 @@
-import React from "react";
-import UnitedStatesImage from '../media/United-States.jpeg';
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { Carousel } from "bootstrap"; // Import Bootstrap Carousel
 
-const Carousel = () => {
-  const imageStyle = {
-    width: '25%',
-    borderRadius: '10px', // Added border radius
-  };
+const CarouselComponent = () => {
+  const images = [
+    "https://mercury.akamaized.net/i/231728d6a9b5a590da1d7c256add3aeb_240320_0.jpg",
+    "https://mercury.akamaized.net/i/bd2e3e7cab6a3cf31f62f3b7a3bdd2b6_201575_0.jpg",
+    "https://mercury.akamaized.net/i/bd2e3e7cab6a3cf31f62f3b7a3bdd2b6_201575_0.jpg",
+    "https://mercury.akamaized.net/i/9efab1e5df1bb31fb2879a6f10b0bdea_232025_0.jpg",
+    "https://mercury.akamaized.net/i/d87b80bb7a3fb13572c40d68fe4c310f_260642_0.jpg",
+    "https://mercury.akamaized.net/i/e59b1dc6c30b3fec61a5fc99d18e65f2_232029_0.jpg",
+  ];
+
+  const carouselRef = useRef(null);
+
+  useEffect(() => {
+    const initCarousel = () => {
+      new Carousel(carouselRef.current, {
+        interval: 10000, // Change interval to 5 seconds
+        touch: true, // Enable touch swipe for responsiveness
+        keyboard: true, // Enable keyboard navigation
+      });
+    };
+
+    initCarousel();
+
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
 
   return (
-    <div className="flex items-center justify-around p-5 hidden lg:flex">
-      <div className="text-center w-50">
-        <motion.h1 
-          initial={{ opacity: 0, y: -50 }} 
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-semibold mb-2 fs-1"
-        >
-          We are trusted by millions of USA customers
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 50 }} 
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-lg text-secondary fs-4"
-        >
-          WIDEST CHOICE OF MEDS AT LOWEST PRICES
-        </motion.p>
+    <div className="carousel slide p-3" data-bs-ride="carousel" ref={carouselRef}>
+      <div className="carousel-inner">
+        {images.map((imageUrl, index) => (
+          <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+            <img
+              src={imageUrl}
+              alt={`Slide ${index + 1}`}
+              className="d-block w-100"
+            />
+          </div>
+        ))}
       </div>
-      <motion.img 
-        src={UnitedStatesImage} 
-        alt="United States" 
-        style={imageStyle} 
-        initial={{ opacity: 0, scale: 0.8 }} 
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
-      />
+      <button className="carousel-control-prev" type="button" data-bs-target=".carousel" data-bs-slide="prev">
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+      <button className="carousel-control-next" type="button" data-bs-target=".carousel" data-bs-slide="next">
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
     </div>
   );
 };
 
-export default Carousel;
+export default CarouselComponent;

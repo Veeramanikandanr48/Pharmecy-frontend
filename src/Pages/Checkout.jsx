@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Layout from "../Layout";
 import PaymentSuccessAlert from '../components/PaymentSuccessAlert';
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const [redirectToHome, setRedirectToHome] = useState(false);
   const [paymentSuccessful, setPaymentSuccessful] = useState(false);
 
   const [sameAsShipping, setSameAsShipping] = useState(true); // State to track if billing address is same as shipping address
@@ -53,24 +56,23 @@ const CheckoutPage = () => {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const customerErrors = validateCustomerInfo();
     const shippingErrors = validateAddress(shippingAddress);
     const paymentErrors = validatePaymentInfo();
-
+  
     if (
       Object.keys(customerErrors).length === 0 &&
       Object.keys(shippingErrors).length === 0 &&
       Object.keys(paymentErrors).length === 0
     ) {
       console.log("Form submitted successfully");
-
+  
       setTimeout(() => {
         setPaymentSuccessful(true);
       }, 2000);
-
-      // Construct JSON object
+  
       const formData = {
         customerInfo,
         shippingAddress,
@@ -78,17 +80,59 @@ const CheckoutPage = () => {
         paymentInfo,
         cartProducts,
       };
-
-      // Save JSON object to local storage
-      localStorage.setItem("order-details", JSON.stringify(formData));
-
-      // Add submission logic here
+  
+      try {
+        // Send order data to backend
+        const response = await fetch("https://pharmecy-backend.onrender.com/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any additional headers if needed
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to store order details");
+        }
+  
+        // Clear cart and order details
+        clearCartAndOrderDetails();
+      } catch (error) {
+        console.error("Error:", error.message);
+        // Handle error, show alert, etc.
+      }
     } else {
       setCustomerInfoErrors(customerErrors);
       setShippingAddressErrors(shippingErrors);
       setPaymentInfoErrors(paymentErrors);
     }
   };
+  
+  const handleModalClose = () => {
+    setPaymentSuccessful(false); // Close the modal
+    setRedirectToHome(true); // Redirect to home after modal closes
+  };
+
+  useEffect(() => {
+    if (redirectToHome) {
+      setTimeout(() => {
+        navigate("/"); // Redirect to home after 3000ms
+      }, 3000);
+    }
+  }, [redirectToHome, navigate]);
+
+  
+  const clearCartAndOrderDetails = () => {
+    // Clear cart and order details from local storage
+    localStorage.removeItem("cart");
+    localStorage.removeItem("order-details");
+  
+    // Clear cart products state
+    setCartProducts([]);
+  };
+  
+  
 
   const validateCustomerInfo = () => {
     let errors = {};
@@ -767,7 +811,7 @@ const CheckoutPage = () => {
             )}
           </div>
       </div>
-      <PaymentSuccessAlert show={paymentSuccessful} onClose={setPaymentSuccessful} />
+      <PaymentSuccessAlert show={paymentSuccessful} onClose={handleModalClose} />
     </Layout>
   );
 };

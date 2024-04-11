@@ -13,6 +13,12 @@ const ContactFormWithInfo = () => {
     message: "",
   };
 
+  const emailContent = {
+    recipient: "example@example.com",
+    subject: "Message from Contact Form",
+    body: "Dear recipient,\n\nI am writing to you regarding...",
+  };
+
   const validationSchema = Yup.object().shape({
     Name: Yup.string().required("Name is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -21,8 +27,25 @@ const ContactFormWithInfo = () => {
   });
 
   const onSubmit = (values, { resetForm }) => {
-    console.log("Form submitted:", values);
-    resetForm();
+    const { Name, email, phone, country, message } = values;
+
+    // Check if all required fields are filled
+    if (Name && email && phone && message) {
+      // Construct the email content
+      const { recipient, subject } = emailContent;
+      const body = `Name: ${Name}\nEmail: ${email}\nPhone: ${phone}\nCountry: ${country}\n\n${message}`;
+
+      // Construct the mailto link
+      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open default email client with pre-filled content
+      window.location.href = mailtoLink;
+
+      // Reset the form after submission
+      resetForm();
+    }
   };
 
   return (
@@ -31,86 +54,84 @@ const ContactFormWithInfo = () => {
         <h2 className="text-3xl font-semibold text-gray-800 mb-4 text-center">Contact Us</h2>
         <div className="grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
-          <div className="bg-gradient-to-br from-green-400 to-green-600 text-white shadow-md rounded-lg p-10">
-  <Formik
-    initialValues={initialValues}
-    validationSchema={validationSchema}
-    onSubmit={onSubmit}
-  >
-    {({ errors, touched }) => (
-      <Form>
-        <div className="mb-4">
-          <FieldWrapper label="Name" name="Name" error={errors.Name} touched={touched.Name}>
-            <Field
-              type="text"
-              name="Name"
-              id="Name"
-              className="form-control"
-              placeholder="Enter your name"
-            />
-          </FieldWrapper>
-        </div>
-        <div className="mb-4">
-          <FieldWrapper label="Email Address" name="email" error={errors.email} touched={touched.email}>
-            <Field
-              type="email"
-              name="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter your email address"
-            />
-          </FieldWrapper>
-        </div>
-        <div className="mb-4">
-          <FieldWrapper label="Phone" name="phone" error={errors.phone} touched={touched.phone}>
-            <Field
-              type="tel"
-              name="phone"
-              id="phone"
-              className="form-control"
-              placeholder="Enter your phone number"
-            />
-          </FieldWrapper>
-        </div>
-        <div className="mb-4">
-          <FieldWrapper label="Country" name="country">
-            <Field
-              as="select"
-              name="country"
-              id="country"
-              className="form-control"
-            >
-              <option value="USA">USA</option>
-              <option value="Non USA">Non USA</option>
-            </Field>
-          </FieldWrapper>
-        </div>
-        <div className="mb-4">
-          <FieldWrapper label="Message" name="message" error={errors.message} touched={touched.message}>
-            <Field
-              as="textarea"
-              name="message"
-              id="message"
-              rows="4"
-              className="form-control"
-              placeholder="Enter your message"
-            />
-          </FieldWrapper>
-        </div>
-        <div className="text-center">
-          <button
-            type="submit"
-            className="bg-white text-green-600 py-2 px-4 rounded-lg shadow-md hover:bg-green-500 hover:text-black transition duration-300 ease-in-out"
-          >
-            Submit
-          </button>
-        </div>
-      </Form>
-    )}
-  </Formik>
-</div>
-
-
+            <div className="bg-gradient-to-br from-green-400 to-green-600 text-white shadow-md rounded-lg p-10">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+              >
+                {({ errors, touched }) => (
+                  <Form>
+                    <div className="mb-4">
+                      <FieldWrapper label="Name" name="Name" error={errors.Name} touched={touched.Name}>
+                        <Field
+                          type="text"
+                          name="Name"
+                          id="Name"
+                          className="form-control"
+                          placeholder="Enter your name"
+                        />
+                      </FieldWrapper>
+                    </div>
+                    <div className="mb-4">
+                      <FieldWrapper label="Email Address" name="email" error={errors.email} touched={touched.email}>
+                        <Field
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="form-control"
+                          placeholder="Enter your email address"
+                        />
+                      </FieldWrapper>
+                    </div>
+                    <div className="mb-4">
+                      <FieldWrapper label="Phone" name="phone" error={errors.phone} touched={touched.phone}>
+                        <Field
+                          type="tel"
+                          name="phone"
+                          id="phone"
+                          className="form-control"
+                          placeholder="Enter your phone number"
+                        />
+                      </FieldWrapper>
+                    </div>
+                    <div className="mb-4">
+                      <FieldWrapper label="Country" name="country">
+                        <Field
+                          as="select"
+                          name="country"
+                          id="country"
+                          className="form-control"
+                        >
+                          <option value="USA">USA</option>
+                          <option value="Non USA">Non USA</option>
+                        </Field>
+                      </FieldWrapper>
+                    </div>
+                    <div className="mb-4">
+                      <FieldWrapper label="Message" name="message" error={errors.message} touched={touched.message}>
+                        <Field
+                          as="textarea"
+                          name="message"
+                          id="message"
+                          rows="4"
+                          className="form-control"
+                          placeholder="Enter your message"
+                        />
+                      </FieldWrapper>
+                    </div>
+                    <div className="text-center">
+                      <button
+                        type="submit"
+                        className="bg-white text-green-600 py-2 px-4 rounded-lg shadow-md hover:bg-green-500 hover:text-black transition duration-300 ease-in-out"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
           </div>
           <aside className="lg:col-span-1">
             <div className="p-6 lg:p-10 mt-10 lg:mt-0">
