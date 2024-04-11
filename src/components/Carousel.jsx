@@ -16,7 +16,7 @@ const CarouselComponent = () => {
   useEffect(() => {
     const initCarousel = () => {
       new Carousel(carouselRef.current, {
-        interval: 10000, // Change interval to 5 seconds
+        interval: 5000, // Change interval to 5 seconds
         touch: true, // Enable touch swipe for responsiveness
         keyboard: true, // Enable keyboard navigation
       });
@@ -30,7 +30,7 @@ const CarouselComponent = () => {
   }, []);
 
   return (
-    <div className="carousel slide p-3" data-bs-ride="carousel" ref={carouselRef}>
+    <div className="carousel slide py-5" data-bs-ride="carousel" ref={carouselRef}>
       <div className="carousel-inner">
         {images.map((imageUrl, index) => (
           <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
