@@ -109,11 +109,9 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (redirectToHome) {
-      setTimeout(() => {
         navigate("/");
-      }, 3000);
     }
-  }, [redirectToHome, navigate]);
+  });
 
   const clearCartAndOrderDetails = () => {
     localStorage.removeItem("cart");

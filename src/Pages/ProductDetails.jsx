@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
+import CircularProgress from '@mui/material/CircularProgress';
+import Layout from "../Layout";
 import parcel_en from "../media/parcel_en.png";
 import track from "../media/track.png";
 import image from "../media/image.jpg";
 import check from "../media/check.png";
 import testimonial from "../Data/testimonials.json";
 import useProductData from "../Data/useProductData";
-import CircularProgress from '@mui/material/CircularProgress';
-import Layout from "../Layout";
 
 const ProductDetails = () => {
   const [showDescription, setShowDescription] = useState(false);
@@ -149,7 +149,7 @@ const ProductDetails = () => {
                                 </span>
                                 <br />
                                 <span className="dose-dose h4 text-black">
-                                  {index === 2 ? product['Original Price2'] : originalPrice}
+                                  {originalPrice ? originalPrice : ''}
                                 </span>
                                 <br />
                                 <span className="dose-type text-sm text-secondary">
@@ -179,13 +179,14 @@ const ProductDetails = () => {
                                 <br />
                                 <span className="dose-type text-info">save:</span>
                                 <span className="pill-save text-danger text-sm">
-                                  {(
-                                    parseFloat(grossPrice.replace("$", "")) -
-                                    parseFloat(originalPrice.replace("$", ""))
-                                  ).toLocaleString("en-US", {
-                                    style: "currency",
-                                    currency: "USD",
-                                  })}
+                                  {grossPrice && originalPrice ?
+                                    (
+                                      parseFloat(grossPrice.replace("$", "")) -
+                                      parseFloat(originalPrice.replace("$", ""))
+                                    ).toLocaleString("en-US", {
+                                      style: "currency",
+                                      currency: "USD",
+                                    }) : ''}
                                 </span>
                               </td>
                             </tr>

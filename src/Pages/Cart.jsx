@@ -238,14 +238,16 @@ const Cart = ({ updateCartItemNumber }) => {
                 key={product.URL}
                 className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4"
               >
-                <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
+                <Link
+                    to={`/product/${product._id}`}><h1 className="text-sm font-semibold mb-2">{product.Name}</h1></Link>
                 <div className="flex justify-center">
-                  <img
+                <Link
+                    to={`/product/${product._id}`}><img
                     src={product.URL}
                     alt={product.name}
                     title={product.name}
                     className="w-auto h-auto mb-2"
-                  />
+                  /></Link>
                 </div>
                 <p className="text-xs text-blue-400 mb-2">
                   {product.packaging}

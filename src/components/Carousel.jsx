@@ -3,9 +3,9 @@ import { Carousel } from "bootstrap"; // Import Bootstrap Carousel
 
 const CarouselComponent = () => {
   const images = [
-    "https://mercury.akamaized.net/i/231728d6a9b5a590da1d7c256add3aeb_240320_0.jpg",
-    "https://mercury.akamaized.net/i/bd2e3e7cab6a3cf31f62f3b7a3bdd2b6_201575_0.jpg",
-    "https://mercury.akamaized.net/i/bd2e3e7cab6a3cf31f62f3b7a3bdd2b6_201575_0.jpg",
+    "https://res.cloudinary.com/dpcfyn3si/image/upload/v1712920615/uploads/ipd74pyd1a3z76jv32qw.jpg",
+    "https://res.cloudinary.com/dpcfyn3si/image/upload/v1712920615/uploads/p487ptyrbkxibw2dlyiz.jpg",
+    "https://res.cloudinary.com/dpcfyn3si/image/upload/v1712920615/uploads/pmar6lpfusooguvlyiby.jpg",
     "https://mercury.akamaized.net/i/9efab1e5df1bb31fb2879a6f10b0bdea_232025_0.jpg",
     "https://mercury.akamaized.net/i/d87b80bb7a3fb13572c40d68fe4c310f_260642_0.jpg",
     "https://mercury.akamaized.net/i/e59b1dc6c30b3fec61a5fc99d18e65f2_232029_0.jpg",
