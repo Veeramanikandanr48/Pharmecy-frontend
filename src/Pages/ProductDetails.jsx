@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import CircularProgress from '@mui/material/CircularProgress';
-import Layout from "../Layout";
 import parcel_en from "../media/parcel_en.png";
 import track from "../media/track.png";
 import image from "../media/image.jpg";
 import check from "../media/check.png";
 import testimonial from "../Data/testimonials.json";
 import useProductData from "../Data/useProductData";
+import CircularProgress from '@mui/material/CircularProgress';
+import Layout from "../Layout";
 
 const ProductDetails = () => {
   const [showDescription, setShowDescription] = useState(false);
@@ -51,11 +51,6 @@ const ProductDetails = () => {
       </div>
     );
   }
-
-  const renderSecondRowOriginalPrice = () => {
-    const secondRowOriginalPrice = product["Original Price2"];
-    return secondRowOriginalPrice ? secondRowOriginalPrice : '';
-  };
 
   if (error || !product) {
     return <div>Product not found</div>;
@@ -101,78 +96,106 @@ const ProductDetails = () => {
             <div className="row mt-2">
               <div className="col-12">
                 <div className="table-responsive">
-                <table className="table table-hover">
-        <thead>
-          <tr className="text-xs">
-            <th scope="col">Packaging</th>
-            <th scope="col">No of Packs</th>
-            <th scope="col">Image</th>
-            <th scope="col">Price</th>
-            <th scope="col">Bonus</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(product).filter((key) => key.startsWith("no of packs")).map((key, index) => (
-            <tr key={index}>
-              <td className="font-weight-bold">{product.packaging}</td>
-              <td>{product[key]}</td>
-              <td>
-                <img
-                  width="70"
-                  height="70"
-                  src={product.URL}
-                  alt={product.Name}
-                  className="img-fluid"
-                />
-              </td>
-              <td>
-                <span className="product-old-price text-danger font-italic">
-                  <del>{product[`Gross price${index + 1}`]}</del>
-                </span>
-                <br />
-                <span className="dose-dose h4 text-black">
-                  {index === 1 ? renderSecondRowOriginalPrice() : product[`Original price${index + 1}`]}
-                </span>
-                <br />
-                <span className="dose-type text-sm text-secondary">
-                  {product[`Discount price${index + 1}`]}
-                </span>
-              </td>
-              <td>
-                <div className="our-bonus">
-                  {Array.isArray(product.bonus) ? (
-                    product.bonus.map((point, i) => (
-                      <p key={i} className="text-success">
-                        {i >= 0 ? "+" : ""} {point}
-                      </p>
-                    ))
-                  ) : (
-                    <p className="text-success">+ Bonus</p>
-                  )}
-                </div>
-              </td>
-              <td>
-                <a className="btn btn-primary text-xs" href="#">
-                  ADD TO CART
-                </a>
-                <br />
-                <span className="dose-type text-info">save:</span>
-                <span className="pill-save text-danger text-sm">
-                  {product[`Gross price${index + 1}`] && (index === 1 ? renderSecondRowOriginalPrice() : product[`Original price${index + 1}`]) ?
-                    (
-                      parseFloat(product[`Gross price${index + 1}`].replace("$", "")) -
-                      parseFloat((index === 1 ? renderSecondRowOriginalPrice() : product[`Original price${index + 1}`]).replace("$", ""))
-                    ).toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }) : ''}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <table className="table table-hover">
+                    <thead>
+                      <tr className="text-xs">
+                        <th scope="col">Packaging</th>
+                        <th scope="col">No of Packs</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Bonus</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[1, 2, 3, 4, 5].map((index) => {
+                        const discountPrice = product[`Discount price${index}`];
+                        const grossPrice = product[`Gross price${index}`];
+                        const originalPrice = product[`Original price${index}`];
+                        const noOfPacks = product[`no of packs${index}`];
+
+                        if (
+                          discountPrice &&
+                          grossPrice &&
+                          originalPrice &&
+                          noOfPacks
+                        ) {
+                          return (
+                            <tr key={index} onClick={() => handleRowClick({
+                              Id: productName,
+                              Name: product.Name,
+                              imageURL: product.URL,
+                              originalPrice,
+                              noOfPacks,
+                              Mg: product.packaging,
+                              nextQuantity: 1,
+                            })}>
+                              <td className="font-weight-bold">
+                                {product.packaging}
+                              </td>
+                              <td>{noOfPacks}</td>
+                              <td>
+                                <img
+                                  width="70"
+                                  height="70"
+                                  src={product.URL}
+                                  alt={product.Name}
+                                  className="img-fluid"
+                                />
+                              </td>
+                              <td>
+                                <span className="product-old-price text-danger font-italic">
+                                  <del>{grossPrice}</del>
+                                </span>
+                                <br />
+                                <span className="dose-dose h4 text-black">
+                                  {index === 2 ? product['Original Price2'] : originalPrice}
+                                </span>
+                                <br />
+                                <span className="dose-type text-sm text-secondary">
+                                  {discountPrice}
+                                </span>
+                              </td>
+                              <td>
+                                <div className="our-bonus">
+                                  {Array.isArray(product.bonus) ? (
+                                    product.bonus.map((point, i) => (
+                                      <p key={i} className="text-success">
+                                        {i >= 0 ? "+" : ""} {point}
+                                      </p>
+                                    ))
+                                  ) : (
+                                    <p className="text-success">+ Bonus</p>
+                                  )}
+                                </div>
+                              </td>
+                              <td>
+                                <a
+                                  className="btn btn-primary text-xs"
+                                  href={product.addToCartLink}
+                                >
+                                  ADD TO CART
+                                </a>
+                                <br />
+                                <span className="dose-type text-info">save:</span>
+                                <span className="pill-save text-danger text-sm">
+                                  {(
+                                    parseFloat(grossPrice.replace("$", "")) -
+                                    parseFloat(originalPrice.replace("$", ""))
+                                  ).toLocaleString("en-US", {
+                                    style: "currency",
+                                    currency: "USD",
+                                  })}
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
