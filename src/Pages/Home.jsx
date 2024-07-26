@@ -97,10 +97,7 @@ const ProductCard = ({ product }) => (
           <span className="hidden sm:inline">SELECT PACK</span>
           <span className="sm:hidden">Select</span>
         </Link>
-      </div>
-      <p className="mt-2 text-xs text-red-600">
-        Manufacturer's Suggested Retail Price {product["Original price1"]}
-      </p>
+      </div>
     </div>
   </div>
 );
