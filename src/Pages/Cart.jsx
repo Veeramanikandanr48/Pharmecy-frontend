@@ -263,10 +263,10 @@ const Cart = ({ updateCartItemNumber }) => {
                     SELECT PACK
                   </Link>
                 </div>
-                <p className="mt-2 text-xs text-red-600">
-                  Manufacturer's Suggested Retail Price{" "}
-                  {product["Original price1"]}
-                </p>
+                //<p className="mt-2 text-xs text-red-600">
+                  //Manufacturer's Suggested Retail Price{" "}
+                  //{product["Original price1"]}
+                //</p>
               </div>
             ))}
           </div>
