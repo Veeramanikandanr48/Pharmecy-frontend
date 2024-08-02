@@ -238,35 +238,34 @@ const Cart = ({ updateCartItemNumber }) => {
                 key={product.URL}
                 className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4"
               >
-                <Link
-                    to={`/product/${product._id}`}><h1 className="text-sm font-semibold mb-2">{product.Name}</h1></Link>
+                <Link to={`/product/${product._id}`}>
+                  <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
+                </Link>
                 <div className="flex justify-center">
-                <Link
-                    to={`/product/${product._id}`}><img
-                    src={product.URL}
-                    alt={product.name}
-                    title={product.name}
-                    className="w-auto h-auto mb-2"
-                  /></Link>
+                  <Link to={`/product/${product._id}`}>
+                    <img
+                      src={product.URL}
+                      alt={product.name}
+                      title={product.name}
+                      className="w-auto h-auto mb-2"
+                    />
+                  </Link>
                 </div>
-                <p className="text-xs text-blue-400 mb-2">
+                <p className="text-xs text-blue-400 mb-2 flex justify-center">
                   {product.packaging}
                 </p>
-                <div className="flex justify-between items-center">
-                  <p className="text-sm font-semibold">
-                    {product["Discount price1"]}
-                  </p>
+                <p className="text-xs text-red-400 mb-2 flex justify-center">
+                  Best price guaranteed
+                </p>
+                <div className="flex justify-center">
                   <Link
                     to={`/product/${product._id}`}
                     className="px-2 py-1 text-xs text-white bg-green-500 rounded-md"
                   >
-                    SELECT PACK
+                    <span className="hidden sm:inline">SELECT PACK</span>
+                    <span className="sm:hidden">Select</span>
                   </Link>
                 </div>
-                //<p className="mt-2 text-xs text-red-600">
-                  //Manufacturer's Suggested Retail Price{" "}
-                  //{product["Original price1"]}
-                //</p>
               </div>
             ))}
           </div>
