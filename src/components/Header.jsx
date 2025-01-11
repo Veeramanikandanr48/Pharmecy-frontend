@@ -58,7 +58,7 @@ const Header = ({
       {/* Desktop Header */}
       <div className="hidden lg:flex justify-between px-10 h-36 items-center border-b border-gray-300">
         {/* Logo */}
-        <Link to="/">
+        <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
           <div className="logo">
             <img
               src="https://res.cloudinary.com/dpcfyn3si/image/upload/q_auto/e_saturation/e_improve:outdoor/e5jq0i633htf3jquuclg.jpg"
@@ -114,7 +114,7 @@ const Header = ({
     {cartItemCount === 0 ? "Empty" : cartItemCount}
   </p>
   <button className="bg-green-500 p-2 text-[0.8rem] border-green-500 text-white">
-    <Link to="/cart">View Cart</Link>
+    <Link to="/cart" style={{textDecoration: 'none', color: 'inherit'}}>View Cart</Link>
   </button>
 </div>
 
@@ -172,7 +172,7 @@ const Header = ({
                       className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 ${
                         selectedCategory === category ? "bg-gray-700" : ""
                       }`}
-                      style={{ fontSize: "0.75rem" }}
+                      style={{ fontSize: "0.75rem",textDecoration: 'none', color: 'inherit'}}
                     >
                       {category}
                     </Link>

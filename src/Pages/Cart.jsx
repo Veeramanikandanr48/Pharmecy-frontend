@@ -182,7 +182,7 @@ const Cart = ({ updateCartItemNumber }) => {
           <Link to="/" className="btn btn-outline-dark text-sm">
             CONTINUE SHOPPING
           </Link>
-          <Link to="/checkout" className="btn btn-success text-dark text-sm">
+          <Link to="/checkout" className="btn btn-primary text-light text-sm">
             Check Out
           </Link>
         </div>
@@ -199,7 +199,7 @@ const Cart = ({ updateCartItemNumber }) => {
               <div className="col-12">
                 <div className="d-flex align-items-center mb-2">
                   <div className="cheker-bonus">
-                    <FaCheck color="green" size={24} />
+                    <FaCheck color="blue" size={24} />
                   </div>
                   <div className="cheker-descr">
                     10% discount for all next orders
@@ -207,7 +207,7 @@ const Cart = ({ updateCartItemNumber }) => {
                 </div>
                 <div className="d-flex align-items-center mb-2">
                   <div className="cheker-bonus">
-                    <FaCheck color="green" size={24} />
+                    <FaCheck color="blue" size={24} />
                   </div>
                   <div className="cheker-descr" style={{ color: "gray" }}>
                     Free standard airmail service for all orders with a sum
@@ -216,7 +216,7 @@ const Cart = ({ updateCartItemNumber }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <div className="cheker-bonus">
-                    <FaCheck color="green" size={24} />
+                    <FaCheck color="blue" size={24} />
                   </div>
                   <div className="cheker-descr" style={{ color: "gray" }}>
                     Free trackable courier service for all orders with a sum
@@ -238,11 +238,11 @@ const Cart = ({ updateCartItemNumber }) => {
                 key={product.URL}
                 className="max-w-[300px] bg-white border rounded-md overflow-hidden shadow-md p-4"
               >
-                <Link to={`/product/${product._id}`}>
+                <Link to={`/product/${product._id}`} style={{textDecoration: 'none', color: 'inherit'}}>
                   <h1 className="text-sm font-semibold mb-2">{product.Name}</h1>
                 </Link>
                 <div className="flex justify-center">
-                  <Link to={`/product/${product._id}`}>
+                  <Link to={`/product/${product._id}`} style={{textDecoration: 'none', color: 'inherit'}}>
                     <img
                       src={product.URL}
                       alt={product.name}
@@ -260,7 +260,8 @@ const Cart = ({ updateCartItemNumber }) => {
                 <div className="flex justify-center">
                   <Link
                     to={`/product/${product._id}`}
-                    className="px-2 py-1 text-xs text-white bg-green-500 rounded-md"
+                    style={{textDecoration: 'none', color: 'inherit'}}
+                    className="px-2 py-1 text-xs text-white bg-blue-500 rounded-md"
                   >
                     <span className="hidden sm:inline">SELECT PACK</span>
                     <span className="sm:hidden">Select</span>

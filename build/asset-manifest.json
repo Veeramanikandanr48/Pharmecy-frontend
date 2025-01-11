@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e6a8bb8f.css",
+    "main.js": "/static/js/main.bcd0293a.js",
+    "static/media/parcel_en.png": "/static/media/parcel_en.4d01b36cf0382a7b56fb.png",
+    "static/media/logo - Copy.png": "/static/media/logo - Copy.aa0e87e56b42f750c9a6.png",
+    "static/media/card_content.png": "/static/media/card_content.ff24c171ffd8675e2dc1.png",
+    "index.html": "/index.html",
+    "main.e6a8bb8f.css.map": "/static/css/main.e6a8bb8f.css.map",
+    "main.bcd0293a.js.map": "/static/js/main.bcd0293a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6a8bb8f.css",
+    "static/js/main.bcd0293a.js"
+  ]
+}
