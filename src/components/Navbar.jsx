@@ -88,7 +88,7 @@ const Navbar = () => {
         <div className={`lg:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-700">
             <NavItem to="/" onClick={() => setIsMenuOpen(false)}>Home</NavItem>
-            <NavItem to="/category/offer" onClick={() => setIsMenuOpen(false)}>Offers</NavItem>
+            <NavItem to="/offer" onClick={() => setIsMenuOpen(false)}>Offers</NavItem>
             <NavItem to="/faq" onClick={() => setIsMenuOpen(false)}>FAQ</NavItem>
             <NavItem to="/contact-us" onClick={() => setIsMenuOpen(false)}>Contact Us</NavItem>
             <div className="py-2 border-t border-gray-600">
@@ -145,7 +145,7 @@ export default Navbar;
 //           {/* Desktop NavItems */}
 //           <div className="hidden lg:flex items-center">
 //             <NavItem to="/">Home</NavItem>
-//             <NavItem to="/category/offer">Offers</NavItem>
+//             <NavItem to="/offer">Offers</NavItem>
 //             <NavItem to="/faq">FAQ</NavItem>
 //             <NavItem to="/contact-us">Contact Us</NavItem>
 //           </div>
@@ -218,7 +218,7 @@ export default Navbar;
 //           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 //             <ul className="text-white text-xs flex flex-col items-center p-3 list-none">
 //               <NavItem to="/" onClick={toggleMenu}>Home</NavItem>
-//               <NavItem to="/category/offer" onClick={toggleMenu}>Offers</NavItem>
+//               <NavItem to="/offer" onClick={toggleMenu}>Offers</NavItem>
 //               <NavItem to="/faq" onClick={toggleMenu}>FAQ</NavItem>
 //               <NavItem to="/contact-us" onClick={toggleMenu}>Contact Us</NavItem>
 //             </ul>
