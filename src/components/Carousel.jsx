@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from 'react-router-dom';
 import { Carousel } from "bootstrap"; // Import Bootstrap Carousel
 
 const CarouselComponent = () => {
@@ -29,7 +30,7 @@ const CarouselComponent = () => {
   return (
     <div className="carousel slide py-5" data-bs-ride="carousel" ref={carouselRef}>
       <div className="carousel-inner">
-        {images.map((imageUrl, index) => (
+        {images.map((imageUrl, index) => (          <Link to="/offer" key={index} style={{textDecoration: 'none', color: 'inherit'}}>
           <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
             <img
               src={imageUrl}
@@ -37,6 +38,7 @@ const CarouselComponent = () => {
               className="d-block w-100"
             />
           </div>
+</Link>
         ))}
       </div>
       <button className="carousel-control-prev" type="button" data-bs-target=".carousel" data-bs-slide="prev">
